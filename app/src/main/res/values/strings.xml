@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Team12</string>
+    <string name="title_activity_text">Second Activity</string>
 </resources>
