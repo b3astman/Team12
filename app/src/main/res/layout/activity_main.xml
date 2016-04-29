@@ -12,13 +12,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to Other Activity"
-        android:onClick="sendText"
-        android:id="@+id/button"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="You are in main activity"
+        android:id="@+id/textView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

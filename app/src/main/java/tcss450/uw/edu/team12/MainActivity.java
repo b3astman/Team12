@@ -12,10 +12,4 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
-    public void sendText(View view) {
-        Intent intent = new Intent(this, TextActivity.class);
-
-        startActivity(intent);
-    }
 }
