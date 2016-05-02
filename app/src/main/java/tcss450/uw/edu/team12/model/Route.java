@@ -13,15 +13,18 @@ import java.util.List;
 public class Route implements Serializable {
     public static final String ROUTE_NAME = "route_short_name";
     public static final String DEPARTURE_TIME = "departure_time";
+    public static final String TRIP_HEADSIGN = "trip_headsign";
     public static final String MINUTES = "minutes";
 
     String mRouteName;
     String mDepartureTime;
+    String mTripHeadSign;
     String mMinutes;
 
-    public Route(String routeName, String departureTime, String minutes) {
+    public Route(String routeName, String departureTime, String tripHeadSign, String minutes) {
         mRouteName = routeName;
         mDepartureTime = departureTime;
+        mTripHeadSign = tripHeadSign;
         mMinutes = minutes;
     }
 
@@ -34,6 +37,7 @@ public class Route implements Serializable {
     public String getMinutes() {
         return mMinutes;
     }
+    public String getTripHeadSign() { return mTripHeadSign; }
 
 
     /**  Parses the json string, returns an error message if unsuccessful.
@@ -49,7 +53,7 @@ public class Route implements Serializable {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
                     Route route = new Route(obj.getString(Route.ROUTE_NAME), obj.getString(Route.DEPARTURE_TIME)
-                            , obj.getString(Route.MINUTES));
+                            ,obj.getString(Route.TRIP_HEADSIGN), obj.getString(Route.MINUTES));
                     routesList.add(route);
                 }
             } catch (JSONException e) {

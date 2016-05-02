@@ -33,8 +33,8 @@ public class StopRoutesDetailListFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String STOP_ROUTES_URL = "http://cssgate.insttech.washington.edu/~ldimov/" +
-            "rideontime/queries.php?cmd=routes";
+    private static String STOP_ROUTES_URL = "http://cssgate.insttech.washington.edu/~ldimov/" +
+            "rideontime/queries.php?cmd=routes&stop_id=";
 
     // Captures which stop was selected amongst stops
     public static String STOP_SELECTED;
@@ -44,6 +44,9 @@ public class StopRoutesDetailListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private List<Route> mRoutesList;
+
+    // Selected stop
+    private Stop mSelectedStop;
 
 
     /**
@@ -69,25 +72,63 @@ public class StopRoutesDetailListFragment extends Fragment {
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
+
         }
     }
+
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        Bundle args = getArguments();
+//        if (args != null) {
+//            mSelectedStop = (Stop) args.getSerializable(STOP_SELECTED);
+//            STOP_ROUTES_URL.concat("&stop_id=" + mSelectedStop.getStopId());
+//
+//            Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
+//                    .show();
+//
+//        } else {
+//            mSelectedStop = new Stop("9138", "NE Campus Pkwy & 12th Ave NE - Bay 4");
+//            //STOP_ROUTES_URL.concat("&stop_id=9138");
+//
+//            Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
+//                    .show();
+//        }
+//        DownloadStopBusTimesTask task = new DownloadStopBusTimesTask();
+//
+//        task.execute(new String[]{STOP_ROUTES_URL});
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_list, container, false);
 
+//        // Get selected stop id
+//        mSelectedStop = getArguments().getString("stop_id");
+        Bundle args = getArguments();
+
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+
+            if (args != null) {
+                mSelectedStop = (Stop) args.getSerializable(STOP_SELECTED);
+                STOP_ROUTES_URL = STOP_ROUTES_URL.concat("&stop_id=" + mSelectedStop.getStopId());
+
+                Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
+                        .show();
+
             }
             DownloadStopBusTimesTask task = new DownloadStopBusTimesTask();
-            task.execute(new String[]{STOP_ROUTES_URL, "&stop_id=9138"});
+//            mSelectedStop = new Stop("9138", "NE Campus Pkwy & 12th Ave NE - Bay 4");
+            task.execute(new String[]{STOP_ROUTES_URL});
 
         }
         return view;
@@ -97,8 +138,8 @@ public class StopRoutesDetailListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof StopRoutesDetailListFragment.OnListFragmentInteractionListener) {
-            mListener = (StopRoutesDetailListFragment.OnListFragmentInteractionListener) context;
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
@@ -178,6 +219,9 @@ public class StopRoutesDetailListFragment extends Fragment {
 
             // Everything is good, show the list of courses.
             if (!routesList.isEmpty()) {
+//                mSelectedStop = new Stop("9138", "NE Campus Pkwy & 12th Ave NE - Bay 4");
+//                Toast.makeText(getActivity().getApplicationContext(), mSelectedStop, Toast.LENGTH_LONG)
+//                        .show();
                 mRecyclerView.setAdapter(new MyStopRoutesRecyclerViewAdapter(routesList, mListener));
             }
         }

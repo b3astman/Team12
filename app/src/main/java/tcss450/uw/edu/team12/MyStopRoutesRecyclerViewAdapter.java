@@ -10,6 +10,7 @@ import android.widget.TextView;
 //import ldimov.tacoma.uw.edu.rideontime.dummy.DummyContent.DummyItem;
 
 import tcss450.uw.edu.team12.model.Route;
+import tcss450.uw.edu.team12.model.Stop;
 
 import java.util.List;
 
@@ -39,7 +40,12 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).getRouteName());
+
         holder.mContentView.setText(mValues.get(position).getDepartureTime());
+        holder.mContentView2.setText(mValues.get(position).getTripHeadSign());
+
+        holder.mContentView3.setText(mValues.get(position).getMinutes());
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,15 +76,15 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.stop_route_id);
-            mContentView = (TextView) view.findViewById(R.id.stop_route_dest);
-            mContentView2 = (TextView) view.findViewById(R.id.stop_route_depart_time);
-            mContentView3 = (TextView) view.findViewById(R.id.stop_route_mins_left);
+            mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
+            mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
+            mContentView3 = (TextView) view.findViewById(R.id.content3_stop_route_mins_left);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " " + mContentView.getText() + " " + " " + mContentView2.getText() + " "
-                    + " " + mContentView3.getText() + " ";
+            return super.toString() + mIdView.getText() + mContentView.getText()
+                    + mContentView2.getText() + mContentView3.getText();
         }
     }
 }

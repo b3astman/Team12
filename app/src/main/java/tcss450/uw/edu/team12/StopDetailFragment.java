@@ -46,7 +46,7 @@ public class StopDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_stop_detail, container, false);
-        mRouteIdTextView = (TextView) view.findViewById(R.id.stop_route_id);
+        mRouteIdTextView = (TextView) view.findViewById(R.id.stop_route_idd);
         mRouteNoTextView = (TextView) view.findViewById(R.id.stop_route_no);
         mRouteDestinationTextView = (TextView) view.findViewById(R.id.stop_route_dest);
         mDepartureTimeTextView = (TextView) view.findViewById(R.id.stop_route_depart_time);

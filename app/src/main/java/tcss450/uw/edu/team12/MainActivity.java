@@ -8,7 +8,8 @@ import android.view.View;
 import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
-public class MainActivity extends AppCompatActivity implements BusStopsListFragment.OnListFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements BusStopsListFragment.OnListFragmentInteractionListener,
+                                                    StopRoutesDetailListFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +30,8 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
         }
 
     }
-    @Override
-    public void onListFragmentInteraction(Stop stop) {
-        StopDetailFragment stopDetailFragment = new StopDetailFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(StopDetailFragment.STOP_SELECTED, stop);
-        stopDetailFragment.setArguments(args);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, stopDetailFragment)
-                .addToBackStack(null)
-                .commit();
-
-    }
-
 //    @Override
-//    public void onListFragmentInteraction(Route route) {
+//    public void onListFragmentInteraction(Stop stop) {
 //        StopDetailFragment stopDetailFragment = new StopDetailFragment();
 //        Bundle args = new Bundle();
 //        args.putSerializable(StopDetailFragment.STOP_SELECTED, stop);
@@ -56,4 +43,23 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
 //                .commit();
 //
 //    }
+
+    @Override
+    public void onListFragmentInteraction(Stop stop) {
+        StopRoutesDetailListFragment stopRoutesFragment = new StopRoutesDetailListFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(StopRoutesDetailListFragment.STOP_SELECTED, stop);
+        stopRoutesFragment.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, stopRoutesFragment)
+                .addToBackStack(null)
+                .commit();
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Route route) {
+
+    }
 }
