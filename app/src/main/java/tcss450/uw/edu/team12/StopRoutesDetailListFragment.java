@@ -122,11 +122,11 @@ public class StopRoutesDetailListFragment extends Fragment {
                 mSelectedStop = (Stop) args.getSerializable(STOP_SELECTED);
                 STOP_ROUTES_URL = STOP_ROUTES_URL.concat("&stop_id=" + mSelectedStop.getStopId());
 
-                getActivity().setTitle("View Bus Arrivals");
+
 
                 // DEBUGGING PURPOSES ONLY
-                Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
-                        .show();
+//                Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
+//                        .show();
 
             }
             DownloadStopBusTimesTask task = new DownloadStopBusTimesTask();
@@ -137,6 +137,11 @@ public class StopRoutesDetailListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("View Bus Arrivals");
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -204,8 +209,8 @@ public class StopRoutesDetailListFragment extends Fragment {
         }
         @Override
         protected void onPostExecute(String result) {
-            // Something wrong with the network or the URL.
-            if (result.startsWith("Unable to")) {
+            // Something wrong with the network or the URL or the entered stop id is not in the DB.
+            if (result.startsWith("Unable to") || (result.startsWith("No stop with"))) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
                         .show();
                 return;

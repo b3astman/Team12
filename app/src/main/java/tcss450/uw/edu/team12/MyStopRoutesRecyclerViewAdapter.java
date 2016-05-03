@@ -44,7 +44,7 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
         holder.mContentView.setText(mValues.get(position).getDepartureTime());
         holder.mContentView2.setText(mValues.get(position).getTripHeadSign());
 
-        holder.mContentView3.setText(mValues.get(position).getMinutes());
+//        holder.mContentView3.setText(mValues.get(position).getMinutes());
 
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +69,7 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
         public final TextView mIdView;
         public final TextView mContentView;
         public final TextView mContentView2;
-        public final TextView mContentView3;
+//        public final TextView mContentView3;
         public Route mItem;
 
         public ViewHolder(View view) {
@@ -78,13 +78,13 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
             mIdView = (TextView) view.findViewById(R.id.stop_route_id);
             mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
             mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
-            mContentView3 = (TextView) view.findViewById(R.id.content3_stop_route_mins_left);
+//            mContentView3 = (TextView) view.findViewById(R.id.content3_stop_route_mins_left);
         }
 
         @Override
         public String toString() {
             return super.toString() + mIdView.getText() + mContentView.getText()
-                    + mContentView2.getText() + mContentView3.getText();
+                    + mContentView2.getText(); // + mContentView3.getText()
         }
     }
 }

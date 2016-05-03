@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
 
     }
 
+//    public void setActionBarTitle(String title) {
+//        getSupportActionBar().setTitle(title);
+//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
