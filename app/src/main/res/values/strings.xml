@@ -1,24 +1,28 @@
 <resources>
     <string name="app_name">Ride On Time</string>
-    <string name="title_activity_text">Second Activity</string>
 
     <string name="title_favorites">View Favorites</string>
     <string name="title_details">View Details</string>
-
     <string name="title_share">Share</string>
     <string name="save_favorite">Save as favorite</string>
 
-    <string name="password_hint">Enter your password</string>
-    <string name="email_hint">Enter your userid</string>
-    <string name="sign_in">Sign in</string>
-
     <string name="LOGIN_PREFS">edu.uw.tacoma.bethae.team12.PREFS</string>
+
+    <!--login and logout-->
     <string name="LOGGEDIN">loggedin</string>
-
+    <string name="password_hint">Enter your password</string>
+    <string name="email_hint">Enter your email address</string>
+    <string name="sign_in">Sign in</string>
     <string name="action_logout">Logout</string>
-
     <string name="LOGIN_FILE">tcss450.uw.edu.team12.LOGIN_FILE</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_favorites">View Favorites</string>
+
+    <!--register strings-->
+    <string name="create_user">Enter a valid email address</string>
+    <string name="create_password">Enter a password (6+ characters)</string>
+    <string name="confirm_password">Confirm your password</string>
+    <string name="register">Register</string>
+
 </resources>

@@ -16,38 +16,32 @@ import tcss450.uw.edu.team12.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment {
+public class RegisterFragment extends Fragment {
 
 
-    public LoginFragment() {
+    public RegisterFragment() {
         // Required empty public constructor
     }
 
 
-    // TODO: get user back to sign in or main activity after entering registration fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_login, container, false);
-        final EditText userIdText = (EditText) v.findViewById(R.id.user_id);
-        final EditText pwdText = (EditText) v.findViewById(R.id.pwd);
-        Button registerButton = (Button) v.findViewById(R.id.register_button);
+        View v =  inflater.inflate(R.layout.fragment_register, container, false);
+        Button registerButton = (Button) v.findViewById(R.id.register_user);
+        getActivity().setTitle(R.string.register);
+        final EditText userIdText = (EditText) v.findViewById(R.id.register_user_id);
+        final EditText pwdText = (EditText) v.findViewById(R.id.register_pwd);
+        final EditText confirmText = (EditText) v.findViewById(R.id.register_confirm_pwd);
+
         registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((SignInActivity) getActivity()).register(userIdText.getText().toString(),
-                        pwdText.getText().toString());
-            }
-        });
-
-
-        Button signInButton = (Button) v.findViewById(R.id.signin_button);
-        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userId = userIdText.getText().toString();
                 String pwd = pwdText.getText().toString();
+                String confirm = confirmText.getText().toString();
+
                 if (TextUtils.isEmpty(userId))  {
                     Toast.makeText(v.getContext(), "Enter userid"
                             , Toast.LENGTH_SHORT)
@@ -78,16 +72,28 @@ public class LoginFragment extends Fragment {
                     return;
                 }
 
-                ((SignInActivity) getActivity()).login(userId, pwd);
+                if (!confirm.equals(pwd)) {
+                    Toast.makeText(v.getContext(), "Passwords do not match"
+                            , Toast.LENGTH_SHORT)
+                            .show();
+                    return;
+                }
+
+                // TODO: register user, login to main activity
+                Toast.makeText(v.getContext(), "Should register u",
+                        Toast.LENGTH_SHORT)
+                        .show();
+                return;
             }
         });
 
         return v;
     }
 
-    public interface LoginInteractionListener {
-        public void login(String userId, String pwd);
-        public void register(String userId, String pwd);
-    }
+//    @Override
+//    public View onDestroyView(LayoutInflater inflater, ViewGroup container,
+//                              Bundle savedInstanceState) {
+//
+//    }
 
 }

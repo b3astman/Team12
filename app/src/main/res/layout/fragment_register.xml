@@ -1,36 +1,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="tcss450.uw.edu.team12.authenticate.LoginFragment">
+    tools:context="tcss450.uw.edu.team12.authenticate.RegisterFragment">
 
     <EditText
-        android:id="@+id/user_id"
+        android:id="@+id/register_user_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/email_hint"
+        android:hint="@string/create_user"
         android:inputType="textEmailAddress"/>
     <EditText
-        android:id="@+id/pwd"
+        android:id="@+id/register_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password_hint"
+        android:hint="@string/create_password"
+        android:inputType="textPassword"/>
+    <EditText
+        android:id="@+id/register_confirm_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/confirm_password"
         android:inputType="textPassword"/>
     <Button
-        android:id="@+id/register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/register_user"
         android:text="@string/register"
-        android:layout_gravity="right" />
-
-    <Button
-        android:id="@+id/signin_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sign_in"
         android:layout_gravity="right"/>
-
 
 
 </LinearLayout>
