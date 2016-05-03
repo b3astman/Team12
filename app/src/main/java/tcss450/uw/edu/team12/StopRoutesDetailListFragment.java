@@ -122,6 +122,9 @@ public class StopRoutesDetailListFragment extends Fragment {
                 mSelectedStop = (Stop) args.getSerializable(STOP_SELECTED);
                 STOP_ROUTES_URL = STOP_ROUTES_URL.concat("&stop_id=" + mSelectedStop.getStopId());
 
+                getActivity().setTitle("View Bus Arrivals");
+
+                // DEBUGGING PURPOSES ONLY
                 Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
                         .show();
 
