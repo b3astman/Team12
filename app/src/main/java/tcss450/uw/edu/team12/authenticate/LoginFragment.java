@@ -79,7 +79,6 @@ public class LoginFragment extends Fragment {
                     return;
                 }
                 // check that the user is in the database
-
                 ((SignInActivity) getActivity()).login(userId, pwd);
             }
         });

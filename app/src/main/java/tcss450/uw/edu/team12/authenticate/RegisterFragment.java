@@ -96,14 +96,6 @@ public class RegisterFragment extends Fragment {
                 }
 
                 // User is okay to register
-                Toast.makeText(v.getContext(), "Should register u",
-                        Toast.LENGTH_SHORT)
-                        .show();
-                // TODO: register user, login to main activity
-
-//                RegisterUserTask task = new RegisterUserTask();
-//                task.execute(new String[]{USER_URL});
-
                 String url = buildUserURL(v);
                 mListener.addUser(url);
 
@@ -151,8 +143,6 @@ public class RegisterFragment extends Fragment {
             sb.append("&pwd=");
             sb.append(URLEncoder.encode(userPassword, "UTF-8"));
 
-            Toast.makeText(v.getContext(), "Registered", Toast.LENGTH_LONG)
-                    .show();
             Log.i("RegisterFragment", sb.toString());
 
         }
@@ -162,33 +152,6 @@ public class RegisterFragment extends Fragment {
         }
         return sb.toString();
     }
-
-    /**
-     * Attempt to register the user.
-     */
-//    private class RegisterUserTask extends AsyncTask<String, Void, String> {
-//
-//        @Override
-//        protected void
-//        onPreExecute() {
-//            super.onPreExecute();
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... urls) {
-//
-//            String user = "";
-//
-//
-//            return "";
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//
-//        }
-//
-//    }
 
     public interface RegisterUserListener {
         public void addUser(String url);

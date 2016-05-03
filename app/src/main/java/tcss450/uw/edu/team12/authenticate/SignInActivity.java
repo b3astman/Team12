@@ -23,7 +23,8 @@ import java.net.URL;
 import tcss450.uw.edu.team12.MainActivity;
 import tcss450.uw.edu.team12.R;
 
-public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener, RegisterFragment.RegisterUserListener {
+public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,
+        RegisterFragment.RegisterUserListener {
 
     private SharedPreferences mSharedPreferences;
     private static String USER_URL = "http://cssgate.insttech.washington.edu/~ldimov/users.php";
@@ -114,7 +115,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         task.execute(new String[]{url.toString()});
 
         // Takes you back to the previous fragment by popping the current fragment out.
-        getSupportFragmentManager().popBackStackImmediate();
+//        getSupportFragmentManager().popBackStackImmediate();
 
     }
 
@@ -175,8 +176,11 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                     Toast.makeText(getApplicationContext(), "User successfully added!"
                             , Toast.LENGTH_LONG)
                             .show();
+                    Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Failed to add: "
+                    Toast.makeText(getApplicationContext(), "Failed to register: "
                             + jsonObject.get("error")
                             , Toast.LENGTH_LONG)
                             .show();
