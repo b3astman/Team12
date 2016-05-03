@@ -18,18 +18,17 @@
         android:hint="@string/password_hint"
         android:inputType="textPassword"/>
     <Button
-        android:id="@+id/register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/register"
-        android:layout_gravity="right" />
-
-    <Button
         android:id="@+id/signin_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/sign_in"
         android:layout_gravity="right"/>
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        android:layout_gravity="right" />
 
 
 

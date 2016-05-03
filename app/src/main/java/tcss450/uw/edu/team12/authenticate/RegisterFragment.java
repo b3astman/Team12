@@ -87,6 +87,18 @@ public class RegisterFragment extends Fragment {
             }
         });
 
+        Button backButton = (Button) v.findViewById(R.id.back);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().setContentView(R.layout.activity_sign_in);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, new LoginFragment())
+                        .commit();
+
+
+            }
+        });
         return v;
     }
 

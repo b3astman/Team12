@@ -30,6 +30,8 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        setTitle("Sign in");
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -96,13 +98,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
     // TODO: register user and login
     public void register(String userId, String pwd) {
-        Toast.makeText(this, "Trying to register",
-                Toast.LENGTH_SHORT).show();
-        // if user already signed up, show they are already signed up
-
-        // otherwise, register user.
-
-        // if successful, login
+        // take user to registration
         setContentView(R.layout.activity_sign_in);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, new RegisterFragment())
