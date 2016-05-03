@@ -35,8 +35,8 @@ import java.util.List;
 public class BusStopsListFragment extends Fragment {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
-    private static final String STOPS_URL = "http://cssgate.insttech.washington.edu/~ldimov/" +
-            "rideontime/queries.php?cmd=stops";
+    private static final String STOPS_URL =
+            "http://cssgate.insttech.washington.edu/~ldimov/rideontime/queries.php?cmd=stops";
 
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
