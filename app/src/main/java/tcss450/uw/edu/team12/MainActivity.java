@@ -88,9 +88,11 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
                 Toast.makeText(MainActivity.this, LOGGED_OUT, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_favorites:
+                Toast.makeText(MainActivity.this, "Feature under construction", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.alerts_updates:
+                Toast.makeText(MainActivity.this, "Feature under construction", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);

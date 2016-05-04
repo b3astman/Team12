@@ -10,4 +10,5 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context="tcss450.uw.edu.team12.BusStopsListFragment"
-    tools:listitem="@layout/fragment_stop" />
+    tools:listitem="@layout/fragment_stop"
+    />

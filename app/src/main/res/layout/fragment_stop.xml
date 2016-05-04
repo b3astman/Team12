@@ -5,10 +5,20 @@
     android:orientation="horizontal">
 
     <TextView
+        android:text="Stop ID:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
         android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginTop="@dimen/text_margin"
+        android:layout_marginBottom="@dimen/text_margin"
+        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginLeft="4dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView

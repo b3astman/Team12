@@ -41,7 +41,8 @@ public class Stop implements Serializable {
                 JSONArray arr = new JSONArray(courseJSON);
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
-                    Stop stop = new Stop(obj.getString(Stop.STOP_ID), obj.getString(Stop.STOP_NAME));
+                    String stopName = obj.getString(Stop.STOP_NAME);
+                    Stop stop = new Stop(obj.getString(Stop.STOP_ID), stopName.substring(1, stopName.length() - 1));
                     stopList.add(stop);
                 }
             } catch (JSONException e) {

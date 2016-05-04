@@ -51,25 +51,12 @@ public class BusStopsListFragment extends Fragment {
     public BusStopsListFragment() {
     }
 
-//    @SuppressWarnings("unused")
-//    public static BusStopsListFragment newInstance(int columnCount) {
-//        BusStopsListFragment fragment = new BusStopsListFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_COLUMN_COUNT, columnCount);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-
-//            Fragment stopRoutesDetailListFragment = new StopRoutesDetailListFragment();
-//            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-//            transaction.add(R.id.child_fragment, stopRoutesDetailListFragment).commit();
         }
     }
 
