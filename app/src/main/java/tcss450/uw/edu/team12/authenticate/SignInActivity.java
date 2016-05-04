@@ -19,15 +19,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import tcss450.uw.edu.team12.MainActivity;
+import tcss450.uw.edu.team12.MyStopsRecyclerViewAdapter;
 import tcss450.uw.edu.team12.R;
+import tcss450.uw.edu.team12.model.Stop;
 
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,
         RegisterFragment.RegisterUserListener {
 
     private SharedPreferences mSharedPreferences;
     private static String USER_URL = "http://cssgate.insttech.washington.edu/~ldimov/users.php";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,6 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                     Toast.LENGTH_SHORT) .show();
             return;
         }
-
 
         mSharedPreferences = getSharedPreferences(getString(R.string.LOGIN_PREFS)
                 , Context.MODE_PRIVATE);
@@ -102,6 +106,9 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
+
+//        DownloadUserTask t = new DownloadUserTask();
+//        t.execute(new String[]{USER_URL});
     }
 
     /**
@@ -191,5 +198,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
             }
         }
     }
+
+
 
 }

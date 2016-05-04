@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 
 import tcss450.uw.edu.team12.R;
@@ -94,6 +99,7 @@ public class RegisterFragment extends Fragment {
                     pwdText.requestFocus();
                     return;
                 }
+
 
                 // User is okay to register
                 String url = buildUserURL(v);

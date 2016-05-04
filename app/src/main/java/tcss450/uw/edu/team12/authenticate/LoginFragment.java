@@ -22,8 +22,6 @@ public class LoginFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    // TODO: get user back to sign in or main activity after entering registration fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,10 +77,10 @@ public class LoginFragment extends Fragment {
                     return;
                 }
                 // check that the user is in the database
+
                 ((SignInActivity) getActivity()).login(userId, pwd);
             }
         });
-
         return v;
     }
 
