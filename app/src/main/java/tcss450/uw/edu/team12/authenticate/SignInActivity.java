@@ -30,6 +30,8 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+//        setTitle("Sign in");
+
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -93,4 +95,15 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         startActivity(i);
         finish();
     }
+
+    // TODO: register user and login
+    public void register(String userId, String pwd) {
+        // take user to registration
+        setContentView(R.layout.activity_sign_in);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, new RegisterFragment())
+                .commit();
+
+    }
+
 }
