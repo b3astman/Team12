@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
                 break;
             case R.id.action_favorites:
                 break;
+
+            case R.id.alerts_updates:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
