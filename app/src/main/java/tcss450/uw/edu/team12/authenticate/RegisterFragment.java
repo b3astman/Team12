@@ -153,7 +153,7 @@ public class RegisterFragment extends Fragment {
 
         }
         catch(Exception e) {
-            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+            Toast.makeText(v.getContext(), "There is no network connection. Please connect to the Internet", Toast.LENGTH_LONG)
                     .show();
         }
         return sb.toString();

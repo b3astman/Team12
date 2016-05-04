@@ -26,7 +26,6 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         getActivity().setTitle(R.string.sign_in);
         View v =  inflater.inflate(R.layout.fragment_login, container, false);
         final EditText userIdText = (EditText) v.findViewById(R.id.user_id);
