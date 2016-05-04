@@ -107,6 +107,13 @@ public class BusStopsListFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        // Restore app name when coming back from stop bus arrivals fragment
+        getActivity().setTitle(getResources().getText(R.string.app_name));
+    }
+
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;

@@ -24,5 +24,8 @@
     <string name="create_password">Enter a password (6+ characters)</string>
     <string name="confirm_password">Confirm your password</string>
     <string name="register">Register</string>
+    <string name="hint_search">Enter stop ID...</string>
+    <string name="add_to_fav">Add to Favorites</string>
+    <string name="transit_alerts">Transit Alerts</string>
 
 </resources>

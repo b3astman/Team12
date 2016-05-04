@@ -57,7 +57,7 @@ public class Route implements Serializable {
                     routesList.add(route);
                 }
             } catch (JSONException e) {
-                reason =  "Unable to parse data. Reason: " + e.getMessage();
+                reason =  "There are no bus arrivals within the next 60 minutes.";
             }
         }
         return reason;
