@@ -63,6 +63,7 @@ public class StopDetailFragment extends Fragment {
             mMinutesLeftTextView.setText("Route minutes left");
         }
     }
+
     @Override
     public void onStart() {
         super.onStart();

@@ -1,15 +1,25 @@
 package tcss450.uw.edu.team12.authenticate;
 
 
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 import tcss450.uw.edu.team12.R;
 
@@ -18,11 +28,21 @@ import tcss450.uw.edu.team12.R;
  */
 public class RegisterFragment extends Fragment {
 
+    /* User ID and password */
+    private EditText mUserID;
+    private EditText mUserPassword;
+
+    private RegisterUserListener mListener;
+
+
+    private static final String USERS_URL =
+            "http://cssgate.insttech.washington.edu/~ldimov/users.php";
+    private final static String USER_ADD_URL =
+            "http://cssgate.insttech.washington.edu/~ldimov/addUser.php?";
 
     public RegisterFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,13 +55,15 @@ public class RegisterFragment extends Fragment {
         final EditText pwdText = (EditText) v.findViewById(R.id.register_pwd);
         final EditText confirmText = (EditText) v.findViewById(R.id.register_confirm_pwd);
 
+        mUserID = (EditText) v.findViewById(R.id.register_user_id);
+        mUserPassword = (EditText) v.findViewById(R.id.register_pwd);
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userId = userIdText.getText().toString();
                 String pwd = pwdText.getText().toString();
                 String confirm = confirmText.getText().toString();
-
                 if (TextUtils.isEmpty(userId))  {
                     Toast.makeText(v.getContext(), "Enter userid"
                             , Toast.LENGTH_SHORT)
@@ -56,7 +78,6 @@ public class RegisterFragment extends Fragment {
                     userIdText.requestFocus();
                     return;
                 }
-
                 if (TextUtils.isEmpty(pwd))  {
                     Toast.makeText(v.getContext(), "Enter password"
                             , Toast.LENGTH_SHORT)
@@ -71,18 +92,19 @@ public class RegisterFragment extends Fragment {
                     pwdText.requestFocus();
                     return;
                 }
-
                 if (!confirm.equals(pwd)) {
                     Toast.makeText(v.getContext(), "Passwords do not match"
                             , Toast.LENGTH_SHORT)
                             .show();
+                    pwdText.requestFocus();
                     return;
                 }
 
-                // TODO: register user, login to main activity
-                Toast.makeText(v.getContext(), "Should register u",
-                        Toast.LENGTH_SHORT)
-                        .show();
+
+                // User is okay to register
+                String url = buildUserURL(v);
+                mListener.addUser(url);
+
                 return;
             }
         });
@@ -95,17 +117,53 @@ public class RegisterFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_container, new LoginFragment())
                         .commit();
-
-
             }
         });
         return v;
     }
 
-//    @Override
-//    public View onDestroyView(LayoutInflater inflater, ViewGroup container,
-//                              Bundle savedInstanceState) {
-//
-//    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof RegisterUserListener) {
+            mListener = (RegisterUserListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement RegisterUserListener");
+        }
+    }
+
+    /**
+     * Builds the URL for User Registration.
+     *
+     * @param v
+     * @return a string representatio of the URL
+     */
+    private String buildUserURL(View v) {
+        StringBuilder sb = new StringBuilder(USER_ADD_URL);
+        try {
+            String userId = mUserID.getText().toString();
+            sb.append("email=");
+            sb.append(userId);
+            String userPassword = mUserPassword.getText().toString();
+            sb.append("&pwd=");
+            sb.append(URLEncoder.encode(userPassword, "UTF-8"));
+
+            Log.i("RegisterFragment", sb.toString());
+
+        }
+        catch(Exception e) {
+            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+                    .show();
+        }
+        return sb.toString();
+    }
+
+    public interface RegisterUserListener {
+        public void addUser(String url);
+    }
+
+
+
 
 }
