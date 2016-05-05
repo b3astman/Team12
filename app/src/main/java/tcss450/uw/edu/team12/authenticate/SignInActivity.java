@@ -29,6 +29,10 @@ import tcss450.uw.edu.team12.R;
 import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
+/**
+ * An activity to sign a user into the application. Handles registration and login
+ * information to verify that a user's information is correct in order to continue.
+ */
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,
         RegisterFragment.RegisterUserListener {
 
@@ -37,6 +41,12 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
     private static String USER_VERIFY_URL = "http://cssgate.insttech.washington.edu/~ldimov/rideontime/queries.php?cmd=login&email=";
 
 
+    /**
+     * Checks that a user is connected to a network. If the user's login
+     * information was saved, they will forwarded to the MainActivity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +91,12 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
     }
 
+    /**
+     * Verifies that a user's login information is correct.
+     *
+     * @param userId the users email.
+     * @param pwd the user's password.
+     */
     @Override
     public void login(String userId, String pwd) {
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -109,7 +125,7 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
     }
 
     /**
-     * Register the user.
+     * Adds a user to the database of users.
      *
      * @param url
      */
@@ -193,8 +209,18 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
     }
 
 
+    /**
+     * Verifies that a User's information is already in registered in the User database.
+     */
     private class VerifyUserTask extends AsyncTask<String, Void, String> {
 
+        /**
+         * Gets response from the SQL query. Will return 'Success' if the
+         * user is in the database.
+         *
+         * * @param urls
+         * @return
+         */
         @Override
         protected String doInBackground(String... urls) {
             String response = "";
@@ -222,6 +248,12 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
             return response;
         }
 
+        /**
+         * Sends the user to MainActivity if they are already in the database, otherwise, the user
+         * will be notified they were not found and need to change their login information to login.
+         *
+         * @param result the result of the SQL query
+         */
         @Override
         protected void onPostExecute(String result) {
             // Something wrong with the network or the URL or the entered stop id is not in the DB.

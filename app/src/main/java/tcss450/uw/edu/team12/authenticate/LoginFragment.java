@@ -14,7 +14,7 @@ import android.widget.Toast;
 import tcss450.uw.edu.team12.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A fragment to log a user into the application.
  */
 public class LoginFragment extends Fragment {
 
@@ -22,6 +22,15 @@ public class LoginFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Sets listeners to the LoginFragment's register and signin buttons, allowing
+     * the user to enter registeration, or login to the application.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -76,14 +85,15 @@ public class LoginFragment extends Fragment {
                     return;
                 }
                 // check that the user is in the database
-
                 ((SignInActivity) getActivity()).login(userId, pwd);
             }
         });
         return v;
     }
 
-
+    /**
+     * A listener to handle login and registration events.
+     */
     public interface LoginInteractionListener {
         public void login(String userId, String pwd);
         public void register(String userId, String pwd);

@@ -17,21 +17,26 @@ import android.widget.TextView;
 import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
+/**
+ * Searches fragments for a User's desired stop.
+ */
 public class SearchableActivity extends AppCompatActivity implements StopRoutesDetailListFragment.OnListFragmentInteractionListener,
         SearchView.OnQueryTextListener {
 
+    /**
+     * Instantiate the SearchableActivity to find the routes selected in the
+     * corresponding activity.
+     *
+     * @param savedInstanceState the saved instance.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_searchable);
-//        TextView txt = (TextView)findViewById(R.id.textView);
-
         String query = "";
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
-
 
             if (savedInstanceState == null || getSupportFragmentManager().findFragmentById(R.id.list) == null) {
 
@@ -46,16 +51,16 @@ public class SearchableActivity extends AppCompatActivity implements StopRoutesD
                         .commit();
 
             }
-//            txt.setText("Searching by: " + query);
         }
 
-
-//        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-//            String uri = intent.getDataString();
-//            txt.setText("Suggestion: "+ uri);
-//        }
     }
 
+    /**
+     * Inflates the menu with a search activity.
+     *
+     * @param menu the menu to inflate.
+     * @return true if setting the menu was successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);

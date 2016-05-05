@@ -17,14 +17,20 @@ import java.util.List;
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Route} and makes a call to the
  * specified {@link StopRoutesDetailListFragment.OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStopRoutesRecyclerViewAdapter.ViewHolder> {
 
     private final List<Route> mValues;
     private final StopRoutesDetailListFragment.OnListFragmentInteractionListener mListener;
 
-    public MyStopRoutesRecyclerViewAdapter(List<Route> routes, StopRoutesDetailListFragment.OnListFragmentInteractionListener listener) {
+    /**
+     * Initializes a MyStopRoutesRecyclerViewAdapter.
+     *
+     * @param routes the list of routes.
+     * @param listener a fragment interaction listener.
+     */
+    public MyStopRoutesRecyclerViewAdapter(List<Route> routes,
+                                           StopRoutesDetailListFragment.OnListFragmentInteractionListener listener) {
         mValues = routes;
         mListener = listener;
     }
@@ -44,9 +50,6 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
         holder.mContentView.setText(mValues.get(position).getDepartureTime());
         holder.mContentView2.setText(mValues.get(position).getTripHeadSign());
 
-//        holder.mContentView3.setText(mValues.get(position).getMinutes());
-
-
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,27 +67,33 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
         return mValues.size();
     }
 
+    /**
+     * Sets the viewholder with Route information, such as ID, departure time, and the
+     * route destination.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public final TextView mContentView2;
-//        public final TextView mContentView3;
         public Route mItem;
 
+        /**
+         * Sets the TextView elements with the stop id, departure time, and destination.
+         * @param view
+         */
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.stop_route_id);
             mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
             mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
-//            mContentView3 = (TextView) view.findViewById(R.id.content3_stop_route_mins_left);
         }
 
         @Override
         public String toString() {
             return super.toString() + mIdView.getText() + mContentView.getText()
-                    + mContentView2.getText(); // + mContentView3.getText()
+                    + mContentView2.getText();
         }
     }
 }
