@@ -56,6 +56,10 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
         return mValues.size();
     }
 
+    /**
+     * Sets the ViewHolder element with Stop information such as ID and
+     * destination information.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;

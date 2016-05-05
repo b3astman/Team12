@@ -26,19 +26,12 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
                                                     StopRoutesDetailListFragment.OnListFragmentInteractionListener,
         SearchView.OnQueryTextListener {
 
+    public static final String LOGGED_OUT = "You have logged out";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
-        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-
-
 
         if (savedInstanceState == null || getSupportFragmentManager().findFragmentById(R.id.list) == null) {
             BusStopsListFragment stopsListFragment = new BusStopsListFragment();
@@ -50,9 +43,6 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
 
     }
 
-//    public void setActionBarTitle(String title) {
-//        getSupportActionBar().setTitle(title);
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
@@ -72,28 +62,15 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
         return true;
     }
 
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-//            String query = intent.getStringExtra(SearchManager.QUERY);
-//            Toast.makeText(this, "Searching by: " + query, Toast.LENGTH_SHORT).show();
-//        }
-////        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-////            String uri = intent.getDataString();
-////            Toast.makeText(this, "Suggestion: "+ uri, Toast.LENGTH_SHORT).show();
-////        }
-//    }
-
     @Override
     public boolean onQueryTextSubmit(String query) {
-        // User pressed the search button
+        // Users pressed the search button
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        // User changed the text
+        // Users changed the text
         return false;
     }
     @Override
@@ -108,38 +85,18 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
                     Intent i = new Intent(this, SignInActivity.class);
                     startActivity(i);
                     finish();
-                Toast.makeText(MainActivity.this, "You have logged out logout", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, LOGGED_OUT, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_favorites:
+                Toast.makeText(MainActivity.this, "Feature under construction", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.alerts_updates:
+                Toast.makeText(MainActivity.this, "Feature under construction", Toast.LENGTH_SHORT).show();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
-
-//    @Override
-//    public void onListFragmentInteraction(Stop stop) {
-//        StopDetailFragment stopDetailFragment = new StopDetailFragment();
-//        Bundle args = new Bundle();
-//        args.putSerializable(StopDetailFragment.STOP_SELECTED, stop);
-//        stopDetailFragment.setArguments(args);
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.fragment_container, stopDetailFragment)
-//                .addToBackStack(null)
-//                .commit();
-//
-//    }
-
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v,
-//                                    ContextMenu.ContextMenuInfo menuInfo) {
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_bus, menu);
-//    }
 
     @Override
     public void onListFragmentInteraction(Stop stop) {

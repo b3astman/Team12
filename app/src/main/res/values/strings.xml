@@ -6,7 +6,7 @@
     <string name="title_share">Share</string>
     <string name="save_favorite">Save as favorite</string>
 
-    <string name="LOGIN_PREFS">edu.uw.tacoma.bethae.team12.PREFS</string>
+    <string name="LOGIN_PREFS">tcss450.uw.edu.team12.PREFS</string>
 
     <!--login and logout-->
     <string name="LOGGEDIN">loggedin</string>

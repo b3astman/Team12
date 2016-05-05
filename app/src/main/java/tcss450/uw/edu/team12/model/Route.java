@@ -8,9 +8,13 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * A class representing a Bus Route. Stores information about a specific
+ * route such as the name, departure time, headsign, and minutes until arrival.
+ *
  * Created by Lachezar Dimov on 5/1/2016.
  */
 public class Route implements Serializable {
+
     public static final String ROUTE_NAME = "route_short_name";
     public static final String DEPARTURE_TIME = "departure_time";
     public static final String TRIP_HEADSIGN = "trip_headsign";
@@ -21,6 +25,14 @@ public class Route implements Serializable {
     String mTripHeadSign;
     String mMinutes;
 
+    /**
+     * Constructs a route with the name, departure time, headsign, and minutes until arrival.
+     *
+     * @param routeName name of the route.
+     * @param departureTime time of departure.
+     * @param tripHeadSign head sign of the route.
+     * @param minutes minutes until the route arrives.
+     */
     public Route(String routeName, String departureTime, String tripHeadSign, String minutes) {
         mRouteName = routeName;
         mDepartureTime = departureTime;
@@ -28,19 +40,43 @@ public class Route implements Serializable {
         mMinutes = minutes;
     }
 
+    /**
+     * Getter for the name of the route.
+     *
+     * @return the name of the route.
+     */
     public String getRouteName() {
         return mRouteName;
     }
+
+    /**
+     * Getter for the departure time of the route.
+     *
+     * @return the departure time of the route.
+     */
     public String getDepartureTime() {
         return mDepartureTime;
     }
+
+    /**
+     * Getter for the minutes until arrival of the route.
+     *
+     * @return the minutes until arrival.
+     */
     public String getMinutes() {
         return mMinutes;
     }
+
+    /**
+     * Getter for the head sign of the route.
+     *
+     * @return the head sign of the route.
+     */
     public String getTripHeadSign() { return mTripHeadSign; }
 
 
-    /**  Parses the json string, returns an error message if unsuccessful.
+    /**
+     * Parses the json string for a Route, returns an error message if unsuccessful.
      *
      * Returns stops list if successful.
      * @param courseJSON  * @return reason or null if successful.

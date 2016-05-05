@@ -23,17 +23,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tcss450.uw.edu.team12.MainActivity;
+import tcss450.uw.edu.team12.MyStopRoutesRecyclerViewAdapter;
 import tcss450.uw.edu.team12.MyStopsRecyclerViewAdapter;
 import tcss450.uw.edu.team12.R;
+import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
+/**
+ * An activity to sign a user into the application. Handles registration and login
+ * information to verify that a user's information is correct in order to continue.
+ */
 public class SignInActivity extends AppCompatActivity implements LoginFragment.LoginInteractionListener,
         RegisterFragment.RegisterUserListener {
 
     private SharedPreferences mSharedPreferences;
     private static String USER_URL = "http://cssgate.insttech.washington.edu/~ldimov/users.php";
+    private static String USER_VERIFY_URL = "http://cssgate.insttech.washington.edu/~ldimov/rideontime/queries.php?cmd=login&email=";
 
 
+    /**
+     * Checks that a user is connected to a network. If the user's login
+     * information was saved, they will forwarded to the MainActivity.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,14 +91,18 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
 
     }
 
+    /**
+     * Verifies that a user's login information is correct.
+     *
+     * @param userId the users email.
+     * @param pwd the user's password.
+     */
     @Override
     public void login(String userId, String pwd) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            //Check if the login and password are valid
-            //new LoginTask().execute(url);
             try {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
                         openFileOutput(getString(R.string.LOGIN_FILE)
@@ -93,8 +110,6 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                 outputStreamWriter.write("email = " + userId + ";");
                 outputStreamWriter.write("password = " + pwd);
                 outputStreamWriter.close();
-                Toast.makeText(this,"Stored in File Successfully!", Toast.LENGTH_LONG)
-                        .show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -103,16 +118,14 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                 .edit()
                 .putBoolean(getString(R.string.LOGGEDIN), true)
                 .commit();
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-        finish();
+        String url = USER_VERIFY_URL.concat(userId + "&pwd=" + pwd);
 
-//        DownloadUserTask t = new DownloadUserTask();
-//        t.execute(new String[]{USER_URL});
+        VerifyUserTask v = new VerifyUserTask();
+        v.execute(new String[]{url});
     }
 
     /**
-     * Register the user.
+     * Adds a user to the database of users.
      *
      * @param url
      */
@@ -121,16 +134,12 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
         AddUserTask task = new AddUserTask();
         task.execute(new String[]{url.toString()});
 
-        // Takes you back to the previous fragment by popping the current fragment out.
-//        getSupportFragmentManager().popBackStackImmediate();
-
     }
 
     /**
      * Adds a User
      */
     private class AddUserTask extends AsyncTask<String, Void, String> {
-
 
         @Override
         protected void onPreExecute() {
@@ -193,8 +202,69 @@ public class SignInActivity extends AppCompatActivity implements LoginFragment.L
                             .show();
                 }
             } catch (JSONException e) {
-                Toast.makeText(getApplicationContext(), "Something wrong with the data" +
-                        e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Something wrong with the data. Please check your network connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    /**
+     * Verifies that a User's information is already in registered in the User database.
+     */
+    private class VerifyUserTask extends AsyncTask<String, Void, String> {
+
+        /**
+         * Gets response from the SQL query. Will return 'Success' if the
+         * user is in the database.
+         *
+         * * @param urls
+         * @return
+         */
+        @Override
+        protected String doInBackground(String... urls) {
+            String response = "";
+            HttpURLConnection urlConnection = null;
+            for (String url : urls) {
+                try {
+                    URL urlObject = new URL(url);
+                    urlConnection = (HttpURLConnection) urlObject.openConnection();
+
+                    InputStream content = urlConnection.getInputStream();
+
+                    BufferedReader buffer = new BufferedReader(new InputStreamReader(content));
+                    String s = "";
+                    while ((s = buffer.readLine()) != null) {
+                        response += s;
+                    }
+
+                } catch (Exception e) {
+                    response = "Unable to download the list of bus times. Please check your network connection";
+                } finally {
+                    if (urlConnection != null)
+                        urlConnection.disconnect();
+                }
+            }
+            return response;
+        }
+
+        /**
+         * Sends the user to MainActivity if they are already in the database, otherwise, the user
+         * will be notified they were not found and need to change their login information to login.
+         *
+         * @param result the result of the SQL query
+         */
+        @Override
+        protected void onPostExecute(String result) {
+            // Something wrong with the network or the URL or the entered stop id is not in the DB.
+            if (result.equals("Success")) {
+                Intent i = new Intent(SignInActivity.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            } else {
+                Toast.makeText(getApplicationContext(), "User not found: please register."
+                        , Toast.LENGTH_LONG)
+                        .show();
             }
         }
     }

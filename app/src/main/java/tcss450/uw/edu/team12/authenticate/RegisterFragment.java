@@ -24,12 +24,14 @@ import java.net.URLEncoder;
 import tcss450.uw.edu.team12.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A fragment to handle registration by a user, and input their
+ * registration information into a database of Users.
  */
 public class RegisterFragment extends Fragment {
 
-    /* User ID and password */
+    /* User ID */
     private EditText mUserID;
+    /* User Password */
     private EditText mUserPassword;
 
     private RegisterUserListener mListener;
@@ -44,6 +46,16 @@ public class RegisterFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Attaches listeners to registration buttons to allow the user to register
+     * their information to a database of users, otherwise, allows a user
+     * to go back to the login page.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -122,6 +134,10 @@ public class RegisterFragment extends Fragment {
         return v;
     }
 
+    /**
+     * Attaches the listener to the fragment.
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -153,12 +169,15 @@ public class RegisterFragment extends Fragment {
 
         }
         catch(Exception e) {
-            Toast.makeText(v.getContext(), "Something wrong with the url" + e.getMessage(), Toast.LENGTH_LONG)
+            Toast.makeText(v.getContext(), "There is no network connection. Please connect to the Internet", Toast.LENGTH_LONG)
                     .show();
         }
         return sb.toString();
     }
 
+    /**
+     * Interface to allow a user to be added to a database of users.
+     */
     public interface RegisterUserListener {
         public void addUser(String url);
     }
