@@ -22,6 +22,9 @@ import tcss450.uw.edu.team12.authenticate.SignInActivity;
 import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
+/**
+ * The main activity which holds lists of bus routes or stops.
+ */
 public class MainActivity extends AppCompatActivity implements BusStopsListFragment.OnListFragmentInteractionListener,
                                                     StopRoutesDetailListFragment.OnListFragmentInteractionListener,
         SearchView.OnQueryTextListener {
@@ -38,11 +41,16 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, stopsListFragment)
                     .commit();
-
         }
 
     }
 
+    /**
+     * Sets the menu with the search service.
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
@@ -73,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
         // Users changed the text
         return false;
     }
+
+    /**
+     * Sets options for logout, favorites, and updates menu items when selected.
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -98,6 +113,11 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Replaces the fragment with the stop selected.
+     *
+     * @param stop
+     */
     @Override
     public void onListFragmentInteraction(Stop stop) {
         StopRoutesDetailListFragment stopRoutesFragment = new StopRoutesDetailListFragment();

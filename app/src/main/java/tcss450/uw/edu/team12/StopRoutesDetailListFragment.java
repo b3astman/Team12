@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class StopRoutesDetailListFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
+
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static String STOP_ROUTES_URL = "http://cssgate.insttech.washington.edu/~ldimov/" +
             "rideontime/queries.php?cmd=routes&stop_id=";
@@ -40,7 +40,6 @@ public class StopRoutesDetailListFragment extends Fragment {
     // Captures which stop was selected amongst stops
     public static String STOP_SELECTED;
 
-    // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
@@ -57,16 +56,6 @@ public class StopRoutesDetailListFragment extends Fragment {
     public StopRoutesDetailListFragment() {
     }
 
-//    // TODO: Customize parameter initialization
-//    @SuppressWarnings("unused")
-//    public static StopRoutesDetailListFragment newInstance(int columnCount) {
-//        StopRoutesDetailListFragment fragment = new StopRoutesDetailListFragment();
-//        Bundle args = new Bundle();
-//        args.putInt(ARG_COLUMN_COUNT, columnCount);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,36 +66,12 @@ public class StopRoutesDetailListFragment extends Fragment {
         }
     }
 
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        Bundle args = getArguments();
-//        if (args != null) {
-//            mSelectedStop = (Stop) args.getSerializable(STOP_SELECTED);
-//            STOP_ROUTES_URL.concat("&stop_id=" + mSelectedStop.getStopId());
-//
-//            Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
-//                    .show();
-//
-//        } else {
-//            mSelectedStop = new Stop("9138", "NE Campus Pkwy & 12th Ave NE - Bay 4");
-//            //STOP_ROUTES_URL.concat("&stop_id=9138");
-//
-//            Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
-//                    .show();
-//        }
-//        DownloadStopBusTimesTask task = new DownloadStopBusTimesTask();
-//
-//        task.execute(new String[]{STOP_ROUTES_URL});
-//    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route_list, container, false);
 
-//        // Get selected stop id
-//        mSelectedStop = getArguments().getString("stop_id");
+       // Get selected stop id
         Bundle args = getArguments();
 
         // Set the adapter
@@ -123,15 +88,8 @@ public class StopRoutesDetailListFragment extends Fragment {
                 mSelectedStop = (Stop) args.getSerializable(STOP_SELECTED);
                 STOP_ROUTES_URL = STOP_ROUTES_URL.concat("&stop_id=" + mSelectedStop.getStopId());
 
-
-
-                // DEBUGGING PURPOSES ONLY
-//                Toast.makeText(getActivity().getApplicationContext(), STOP_ROUTES_URL, Toast.LENGTH_LONG)
-//                        .show();
-
             }
             DownloadStopBusTimesTask task = new DownloadStopBusTimesTask();
-//            mSelectedStop = new Stop("9138", "NE Campus Pkwy & 12th Ave NE - Bay 4");
             task.execute(new String[]{STOP_ROUTES_URL});
 
         }
@@ -172,7 +130,6 @@ public class StopRoutesDetailListFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onListFragmentInteraction(Route route);
     }
 
@@ -219,7 +176,6 @@ public class StopRoutesDetailListFragment extends Fragment {
 
             List<Route> routesList = new ArrayList<Route>();
             result = Route.parseCourseJSON(result, routesList);
-            // Something wrong with the JSON returned.
             if (result != null) {
                 Toast.makeText(getActivity().getApplicationContext(), result, Toast.LENGTH_LONG)
                         .show();
@@ -228,9 +184,6 @@ public class StopRoutesDetailListFragment extends Fragment {
 
             // Everything is good, show the list of courses.
             if (!routesList.isEmpty()) {
-//                mSelectedStop = new Stop("9138", "NE Campus Pkwy & 12th Ave NE - Bay 4");
-//                Toast.makeText(getActivity().getApplicationContext(), mSelectedStop, Toast.LENGTH_LONG)
-//                        .show();
                 mRecyclerView.setAdapter(new MyStopRoutesRecyclerViewAdapter(routesList, mListener));
             }
         }
