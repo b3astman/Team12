@@ -7,11 +7,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/busticket"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".authenticate.SignInActivity">
+        <activity android:name=".authenticate.SignInActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +21,10 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop" />
-        <activity android:name=".SearchableActivity">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SearchableActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
