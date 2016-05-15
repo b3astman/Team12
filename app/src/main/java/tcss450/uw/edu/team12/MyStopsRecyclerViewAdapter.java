@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import tcss450.uw.edu.team12.BusStopsListFragment.OnListFragmentInteractionListener;
-//import ldimov.tacoma.uw.edu.rideontime.dummy.DummyContent.DummyItem;
+import tcss450.uw.edu.team12.data.FavoriteStopsDB;
 import tcss450.uw.edu.team12.model.Stop;
 
 import java.util.List;
@@ -26,6 +26,8 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
 
     private final List<Stop> mValues;
     private final OnListFragmentInteractionListener mListener;
+
+    private FavoriteStopsDB mFavStopsDB;
 
     public MyStopsRecyclerViewAdapter(List<Stop> stops, OnListFragmentInteractionListener listener) {
         mValues = stops;
@@ -95,12 +97,26 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
             if (v == mOverflowIcon) {
                 PopupMenu popup = new PopupMenu(v.getContext(), v);
                 popup.inflate(R.menu.mfp_overflow_menu_file);
+
+
+
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(mOverflowIcon.getContext(), "Stop id " + mItem.getStopId() +
-                                                 " added to favorites.", Toast.LENGTH_LONG).show();
-                        return true;
+
+                        mFavStopsDB = new FavoriteStopsDB(mContentView.getContext()); // IS THIS THE RIGHT PLACE TO DO THAT?
+
+                        boolean success = mFavStopsDB.insertStop(mItem.getStopId(), mItem.getStopName());
+
+                        if (success) {
+                            Toast.makeText(mOverflowIcon.getContext(), "Stop id " + mItem.getStopId() +
+                                    " added to favorites.", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(mOverflowIcon.getContext(), "Stop" +
+                                    " already exists in your list of favorite stops.", Toast.LENGTH_LONG).show();
+                        }
+
+                        return success;
                     }
 
                 });
