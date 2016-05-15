@@ -1,10 +1,16 @@
 package tcss450.uw.edu.team12;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import tcss450.uw.edu.team12.BusStopsListFragment.OnListFragmentInteractionListener;
 //import ldimov.tacoma.uw.edu.rideontime.dummy.DummyContent.DummyItem;
@@ -60,10 +66,16 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
      * Sets the ViewHolder element with Stop information such as ID and
      * destination information.
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
+                                                            RecyclerView.OnLongClickListener
+
+    {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
+
+        private ImageView mOverflowIcon;
+
         public Stop mItem;
 
         public ViewHolder(View view) {
@@ -71,7 +83,36 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.id);
             mContentView = (TextView) view.findViewById(R.id.content);
+            view.setOnClickListener(this);
+            view.setOnLongClickListener(this);
 
+            mOverflowIcon = (ImageView) view.findViewById(R.id.mfp_context_menu);
+            mOverflowIcon.setOnClickListener(this);
+
+        }
+        @Override
+        public void onClick(View v) {
+            if (v == mOverflowIcon) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                popup.inflate(R.menu.mfp_overflow_menu_file);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(mOverflowIcon.getContext(), "Stop id " + mItem.getStopId() +
+                                                 " added to favorites.", Toast.LENGTH_LONG).show();
+                        return true;
+                    }
+
+                });
+                popup.show();
+            }
+        }
+
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
 
         @Override
