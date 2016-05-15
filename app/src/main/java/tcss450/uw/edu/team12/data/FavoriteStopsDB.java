@@ -49,7 +49,7 @@ public class FavoriteStopsDB {
             rowId = mSQLiteDatabase.insertWithOnConflict("FavoriteStops", null, contentValues, SQLiteDatabase.CONFLICT_FAIL);
 
         } catch (SQLiteConstraintException e) {
-            Log.d(this.getClass().toString(), "SQLiteConstraintException caught. " + "UNIQUE constraint failed.");
+            Log.d(this.getClass().toString(), "SQLiteConstraintException caught." + " UNIQUE constraint failed.");
         }
         mSQLiteDatabase.close();
         return rowId != -1;
