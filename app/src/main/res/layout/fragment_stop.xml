@@ -8,8 +8,7 @@
         android:text="Stop ID:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/id"
@@ -17,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/text_margin"
         android:layout_marginBottom="@dimen/text_margin"
-        android:layout_marginRight="@dimen/text_margin"
+        android:layout_marginRight="8dp"
         android:layout_marginLeft="4dp"
         android:textAppearance="?attr/textAppearanceListItem" />
 
@@ -25,8 +24,17 @@
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginTop="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
+
+    <ImageView
+        android:id="@+id/mfp_context_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+
+        android:src="@drawable/ic_dots_vertical_grey600_18dp"
+         />
 
 
 </LinearLayout>
