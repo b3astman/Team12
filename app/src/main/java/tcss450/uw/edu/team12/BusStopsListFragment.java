@@ -3,13 +3,16 @@ package tcss450.uw.edu.team12;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -81,6 +84,12 @@ public class BusStopsListFragment extends Fragment {
         return view;
     }
 
+//    @Override
+//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+////        mRecyclerView = view.findViewById(R.id.);
+//        registerForContextMenu(mRecyclerView);
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -122,6 +131,7 @@ public class BusStopsListFragment extends Fragment {
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Stop stop);
     }
+
 
     /**
      * Download information on bus stops, such as stop id and stop name.
