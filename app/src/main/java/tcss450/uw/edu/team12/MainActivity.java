@@ -27,7 +27,8 @@ import tcss450.uw.edu.team12.model.Stop;
  */
 public class MainActivity extends AppCompatActivity implements BusStopsListFragment.OnListFragmentInteractionListener,
                                                     StopRoutesDetailListFragment.OnListFragmentInteractionListener,
-        SearchView.OnQueryTextListener {
+                                                    FavoriteStopFragment.OnListFragmentInteractionListener,
+                                                    SearchView.OnQueryTextListener {
 
     public static final String LOGGED_OUT = "You have logged out";
 
@@ -103,7 +104,12 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
                 Toast.makeText(MainActivity.this, LOGGED_OUT, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_favorites:
-                Toast.makeText(MainActivity.this, "Feature under construction", Toast.LENGTH_SHORT).show();
+                FavoriteStopFragment favoriteFragment = new FavoriteStopFragment();
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, favoriteFragment)
+                        .addToBackStack(null)
+                        .commit();
                 break;
 
             case R.id.alerts_updates:

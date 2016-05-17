@@ -1,9 +1,10 @@
 package tcss450.uw.edu.team12;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,6 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import tcss450.uw.edu.team12.BusStopsListFragment.OnListFragmentInteractionListener;
 import tcss450.uw.edu.team12.data.FavoriteStopsDB;
 import tcss450.uw.edu.team12.model.Stop;
 
@@ -20,24 +20,32 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Stop} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
+ * specified {@link FavoriteStopFragment.OnListFragmentInteractionListener}.
+ * TODO: Replace the implementation with code for your data type.
  */
-public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecyclerViewAdapter.ViewHolder> {
+public class MyFavoriteStopRecyclerViewAdapter extends RecyclerView.Adapter<MyFavoriteStopRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Stop> mValues;
-    private final OnListFragmentInteractionListener mListener;
-
+    private List<Stop> mValues;
+    private final FavoriteStopFragment.OnListFragmentInteractionListener mListener;
     private FavoriteStopsDB mFavStopsDB;
 
-    public MyStopsRecyclerViewAdapter(List<Stop> stops, OnListFragmentInteractionListener listener) {
-        mValues = stops;
+    // Context member variable
+    private Context mContext;
+    private List<Stop> mFavoriteStopList;
+
+    public MyFavoriteStopRecyclerViewAdapter(List<Stop> items, FavoriteStopFragment.OnListFragmentInteractionListener listener) {
+        mValues = items;
         mListener = listener;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_stop, parent, false);
+                .inflate(R.layout.fragment_fav_stop, parent, false);
+
+        // Get context
+        mContext = parent.getContext();
+
         return new ViewHolder(view);
     }
 
@@ -64,41 +72,34 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
         return mValues.size();
     }
 
-    /**
-     * Sets the ViewHolder element with Stop information such as ID and
-     * destination information.
-     */
     public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
-                                                            RecyclerView.OnLongClickListener
-
-    {
+            RecyclerView.OnLongClickListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
 
         private ImageView mOverflowIcon;
-
         public Stop mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = (TextView) view.findViewById(R.id.id_fav);
+            mContentView = (TextView) view.findViewById(R.id.content_fav);
+
             view.setOnClickListener(this);
             view.setOnLongClickListener(this);
 
-            mOverflowIcon = (ImageView) view.findViewById(R.id.mfp_context_menu);
+            mOverflowIcon = (ImageView) view.findViewById(R.id.mfp_context_menu2);
             mOverflowIcon.setOnClickListener(this);
 
         }
+
         @Override
         public void onClick(View v) {
             if (v == mOverflowIcon) {
                 PopupMenu popup = new PopupMenu(v.getContext(), v);
-                popup.inflate(R.menu.mfp_overflow_menu_file);
-
-
+                popup.inflate(R.menu.mfp_overflow_menu_file2);
 
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -106,22 +107,28 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
 
                         mFavStopsDB = new FavoriteStopsDB(mContentView.getContext());
 
-                        boolean success = mFavStopsDB.insertStop(mItem.getStopId(), mItem.getStopName());
+
+                        boolean success = mFavStopsDB.removeStop(mItem.getStopId());
 
                         if (success) {
                             Toast.makeText(mOverflowIcon.getContext(), "Stop id " + mItem.getStopId() +
-                                    " added to favorite stops.", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(mOverflowIcon.getContext(), "Stop" +
-                                    " already exists in your list of favorite stops.", Toast.LENGTH_LONG).show();
-                        }
+                                    " was removed from favorite stops.", Toast.LENGTH_LONG).show();
 
+
+                            // Save the changes to the dataset and notify adapter of the change
+                            mFavStopsDB = new FavoriteStopsDB(mContext);
+                            mFavoriteStopList = mFavStopsDB.getFavStops();
+                            mValues = mFavoriteStopList;
+                            notifyDataSetChanged();
+                            mFavStopsDB.closeDB();
+                        }
                         return success;
                     }
 
                 });
                 popup.show();
             }
+
         }
 
 
@@ -130,7 +137,6 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
         public boolean onLongClick(View v) {
             return false;
         }
-
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
