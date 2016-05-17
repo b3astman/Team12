@@ -17,7 +17,7 @@
     <string name="LOGIN_FILE">tcss450.uw.edu.team12.LOGIN_FILE</string>
 
     <string name="action_settings">Settings</string>
-    <string name="action_favorites">View Favorites</string>
+    <string name="action_favorites">Favorite Stops</string>
 
     <!--register strings-->
     <string name="create_user">Enter a valid email address</string>
@@ -25,7 +25,9 @@
     <string name="confirm_password">Confirm your password</string>
     <string name="register">Register</string>
     <string name="hint_search">Enter stop ID...</string>
-    <string name="mfp_fav">Add to favorites</string> <!-- CHANGE THIS LATER -->
+    <string name="mfp_fav">Add to favorites</string>
+    <string name="mfp_fav2">Remove from favorites</string> <!-- CHANGE THIS LATER -->
     <string name="transit_alerts">Transit Alerts</string>
+    <string name="fav_stops">Favorite Stops</string>
 
 </resources>

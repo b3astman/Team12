@@ -56,6 +56,15 @@ public class SearchableActivity extends AppCompatActivity implements StopRoutesD
     }
 
     /**
+     * Resets the title of the activity to 'Enter stop ID...'
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.setTitle(getResources().getText(R.string.hint_search));
+
+    }
+    /**
      * Inflates the menu with a search activity.
      *
      * @param menu the menu to inflate.
