@@ -20,7 +20,6 @@
         </activity>
         <activity
             android:name=".MainActivity"
-
             android:configChanges="orientation|screenSize"
             android:launchMode="singleTop" />
         <activity android:name=".SearchableActivity">
@@ -32,6 +31,7 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity android:name=".TransitAlertsActivity"></activity>
     </application>
 
 </manifest>
