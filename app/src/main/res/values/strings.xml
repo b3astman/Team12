@@ -29,5 +29,7 @@
     <string name="mfp_fav2">Remove from favorites</string> <!-- CHANGE THIS LATER -->
     <string name="transit_alerts">Transit Alerts</string>
     <string name="fav_stops">Favorite Stops</string>
+    <string name="connection_error">Connection Error</string>
+    <string name="xml_error">XML Error</string>
 
 </resources>

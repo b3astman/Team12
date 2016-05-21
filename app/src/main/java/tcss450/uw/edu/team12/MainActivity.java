@@ -8,13 +8,10 @@ import android.content.SharedPreferences;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import android.widget.Toast;
 
@@ -113,7 +110,9 @@ public class MainActivity extends AppCompatActivity implements BusStopsListFragm
                 break;
 
             case R.id.alerts_updates:
-                Toast.makeText(MainActivity.this, "Feature under construction", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(this, TransitAlertsActivity.class);
+                startActivity(in);
+//                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
