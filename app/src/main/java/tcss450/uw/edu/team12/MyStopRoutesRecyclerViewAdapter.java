@@ -1,14 +1,21 @@
 package tcss450.uw.edu.team12;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import ldimov.tacoma.uw.edu.rideontime.ItemFragment.OnListFragmentInteractionListener;
 //import ldimov.tacoma.uw.edu.rideontime.dummy.DummyContent.DummyItem;
 
+import tcss450.uw.edu.team12.data.FavoriteStopsDB;
 import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
@@ -22,17 +29,22 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
 
     private final List<Route> mValues;
     private final StopRoutesDetailListFragment.OnListFragmentInteractionListener mListener;
+    // Selected stop
+    private Stop mSelectedStop;
 
     /**
      * Initializes a MyStopRoutesRecyclerViewAdapter.
      *
      * @param routes the list of routes.
      * @param listener a fragment interaction listener.
+     * @param selectedStop the selected stop.
      */
     public MyStopRoutesRecyclerViewAdapter(List<Route> routes,
-                                           StopRoutesDetailListFragment.OnListFragmentInteractionListener listener) {
+                                           StopRoutesDetailListFragment.OnListFragmentInteractionListener listener,
+                                           Stop selectedStop) {
         mValues = routes;
         mListener = listener;
+        mSelectedStop = selectedStop;
     }
 
     @Override
@@ -71,12 +83,14 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
      * Sets the viewholder with Route information, such as ID, departure time, and the
      * route destination.
      */
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
+            RecyclerView.OnLongClickListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public final TextView mContentView2;
         public Route mItem;
+        private ImageView mOverflowIcon;
 
         /**
          * Sets the TextView elements with the stop id, departure time, and destination.
@@ -88,6 +102,43 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
             mIdView = (TextView) view.findViewById(R.id.stop_route_id);
             mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
             mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
+            mOverflowIcon = (ImageView) view.findViewById(R.id.route_context_menu);
+            mOverflowIcon.setOnClickListener(this);
+
+        }
+        @Override
+        public void onClick(View v) {
+            if (v == mOverflowIcon) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                final Context ct = v.getContext();
+                popup.inflate(R.menu.mfp_overflow_menu_file3);
+
+
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        Intent sendIntent = new Intent();
+                        sendIntent.setAction(Intent.ACTION_SEND);
+                        sendIntent.putExtra(Intent.EXTRA_TEXT, "I'm catching the " +
+                                mIdView.getText() + " from " + mSelectedStop.getStopName() +
+                                ". It departs at " + mContentView.getText() +
+                                " and goes to " + mContentView2.getText() + ".");
+                        sendIntent.setType("text/plain");
+//                        startActivity(sendIntent);
+                        ct.startActivity(sendIntent);
+                        return true;
+                    }
+
+                });
+                popup.show();
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
 
         @Override

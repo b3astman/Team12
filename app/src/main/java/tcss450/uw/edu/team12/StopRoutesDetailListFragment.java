@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,6 +45,7 @@ public class StopRoutesDetailListFragment extends Fragment {
     private OnListFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private List<Route> mRoutesList;
+    SwipeRefreshLayout mSwipeContainer;
 
     // Selected stop
     private Stop mSelectedStop;
@@ -75,9 +77,9 @@ public class StopRoutesDetailListFragment extends Fragment {
         Bundle args = getArguments();
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
+        if (view instanceof SwipeRefreshLayout) {
             Context context = view.getContext();
-            mRecyclerView = (RecyclerView) view;
+            mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
             if (mColumnCount <= 1) {
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -89,6 +91,29 @@ public class StopRoutesDetailListFragment extends Fragment {
                 STOP_ROUTES_URL = STOP_ROUTES_URL.concat("&stop_id=" + mSelectedStop.getStopId());
 
             }
+
+            // Lookup the swipe container view
+            mSwipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+            // Setup refresh listener which triggers new data loading
+            mSwipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    // Your code to refresh the list here.
+                    // Make sure you call swipeContainer.setRefreshing(false)
+                    // once the network request has completed successfully
+
+                    DownloadStopBusTimesTask task1 = new DownloadStopBusTimesTask();
+                    task1.execute(new String[] {STOP_ROUTES_URL});
+
+                    mSwipeContainer.setRefreshing(false);
+                }
+            });
+            // Configure the refreshing colors
+            mSwipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                    android.R.color.holo_green_light,
+                    android.R.color.holo_orange_light,
+                    android.R.color.holo_red_light);
+
             DownloadStopBusTimesTask task = new DownloadStopBusTimesTask();
             task.execute(new String[]{STOP_ROUTES_URL});
 
@@ -182,9 +207,10 @@ public class StopRoutesDetailListFragment extends Fragment {
                 return;
             }
 
-            // Everything is good, show the list of courses.
+            // Everything is good, show the list of buses.
             if (!routesList.isEmpty()) {
-                mRecyclerView.setAdapter(new MyStopRoutesRecyclerViewAdapter(routesList, mListener));
+                mRecyclerView.setAdapter(new MyStopRoutesRecyclerViewAdapter(routesList, mListener,
+                        mSelectedStop));
             }
         }
     }
