@@ -31,6 +31,8 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
     private final StopRoutesDetailListFragment.OnListFragmentInteractionListener mListener;
     // Selected stop
     private Stop mSelectedStop;
+    private static final int TYPE_HEAD = 0;
+    private static final int TYPE_ROUTE_LIST = 1;
 
     /**
      * Initializes a MyStopRoutesRecyclerViewAdapter.
@@ -48,30 +50,59 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return TYPE_HEAD;
+        }
+        return TYPE_ROUTE_LIST;
+
+    }
+
+
+    @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_route, parent, false);
-        return new ViewHolder(view);
+        View view;
+
+        if (viewType == TYPE_ROUTE_LIST) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.fragment_route, parent, false);
+            return new ViewHolder(view, viewType);
+        } else if (viewType == TYPE_HEAD) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.head_layout, parent, false);
+            return new ViewHolder(view, viewType);
+        }
+        return null;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getRouteName());
 
-        holder.mContentView.setText(mValues.get(position).getDepartureTime());
-        holder.mContentView2.setText(mValues.get(position).getTripHeadSign());
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+        if (holder.view_type == TYPE_ROUTE_LIST) {
+            holder.mItem = mValues.get(position);
+            holder.mIdView.setText(mValues.get(position).getRouteName());
+
+            holder.mContentView.setText(mValues.get(position).getDepartureTime());
+            holder.mContentView2.setText(mValues.get(position).getTripHeadSign());
+
+
+
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        // Notify the active callbacks interface (the activity, if the
+                        // fragment is attached to one) that an item has been selected.
+                        mListener.onListFragmentInteraction(holder.mItem);
+                    }
                 }
-            }
-        });
+            });
+        }
+// else if (holder.view_type == TYPE_HEAD) {
+//            holder.mStopName.setText("Bus stop name");
+//        }
+
     }
 
     @Override
@@ -85,27 +116,42 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
      */
     public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
             RecyclerView.OnLongClickListener {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public final TextView mContentView2;
+        public View mView;
+        public TextView mIdView;
+        public TextView mContentView;
+        public TextView mContentView2;
         public Route mItem;
         private ImageView mOverflowIcon;
+
+        int view_type;
+
+        // header
+        TextView mStopName;
 
         /**
          * Sets the TextView elements with the stop id, departure time, and destination.
          * @param view
          */
-        public ViewHolder(View view) {
+        public ViewHolder(View view, int viewType) {
             super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.stop_route_id);
-            mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
-            mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
-            mOverflowIcon = (ImageView) view.findViewById(R.id.route_context_menu);
-            mOverflowIcon.setOnClickListener(this);
+
+            if (viewType == TYPE_ROUTE_LIST) {
+                mView = view;
+                mIdView = (TextView) view.findViewById(R.id.stop_route_id);
+                mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
+                mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
+                mOverflowIcon = (ImageView) view.findViewById(R.id.route_context_menu);
+                mOverflowIcon.setOnClickListener(this);
+                view_type = 1;
+            } else if (viewType == TYPE_HEAD) {
+                mStopName = (TextView) view.findViewById(R.id.stop_name);
+                mStopName.setText(mSelectedStop.getStopName());
+                view_type = 0;
+            }
+
 
         }
+
         @Override
         public void onClick(View v) {
             if (v == mOverflowIcon) {
