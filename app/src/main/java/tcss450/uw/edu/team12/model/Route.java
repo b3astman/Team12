@@ -50,12 +50,31 @@ public class Route implements Serializable {
     }
 
     /**
+     * Setter for route name.
+     *
+     * @param routeName
+     */
+    public void setRouteName(String routeName) {
+        if (routeName == null) throw new IllegalArgumentException();
+        mRouteName = routeName;
+    }
+
+    /**
      * Getter for the departure time of the route.
      *
      * @return the departure time of the route.
      */
     public String getDepartureTime() {
         return mDepartureTime;
+    }
+
+    /**
+     * Setter for departure time.
+     * @param departureTime
+     */
+    public void setDepartureTime(String departureTime) {
+        if (departureTime == null) throw new IllegalArgumentException();
+        mDepartureTime = departureTime;
     }
 
     /**
@@ -68,12 +87,31 @@ public class Route implements Serializable {
     }
 
     /**
+     * Setter for minutes.
+     *
+     * @param minutes
+     */
+    public void setMinutes(String minutes) {
+        if (minutes == null) throw new IllegalArgumentException();
+        mMinutes = minutes;
+    }
+
+    /**
      * Getter for the head sign of the route.
      *
      * @return the head sign of the route.
      */
     public String getTripHeadSign() { return mTripHeadSign; }
 
+    /**
+     * Setter for Trip Head Sign.
+     *
+     * @param headSign
+     */
+    public void setTripHeadSign(String headSign) {
+        if (headSign == null) throw new IllegalArgumentException();
+        mTripHeadSign = headSign;
+    }
 
     /**
      * Parses the json string for a Route, returns an error message if unsuccessful.

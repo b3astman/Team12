@@ -50,6 +50,28 @@ public class Stop implements Serializable {
     }
 
     /**
+     * Setter for the Stop id.
+     *
+     * @param id
+     */
+    public void setStopId(String id) {
+        if (id == null) throw new IllegalArgumentException();
+        mStopId = id;
+    }
+
+    /**
+     * Setter for the Stop name.
+     *
+     * @param stopName
+     */
+    public void setStopName(String stopName) {
+        if (stopName == null) throw new IllegalArgumentException();
+        mStopName = stopName;
+    }
+
+
+
+    /**
      * Parses the json string, returns an error message if unsuccessful.
      *
      * Returns stops list if successful.
