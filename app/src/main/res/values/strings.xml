@@ -31,5 +31,6 @@
     <string name="fav_stops">Favorite Stops</string>
     <string name="connection_error">Connection Error</string>
     <string name="xml_error">XML Error</string>
+    <string name="share_bus_arrival">Share Content</string>
 
 </resources>
