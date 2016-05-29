@@ -19,11 +19,13 @@ public class Route implements Serializable {
     public static final String DEPARTURE_TIME = "departure_time";
     public static final String TRIP_HEADSIGN = "trip_headsign";
     public static final String MINUTES = "minutes";
+    public static final String STOP_NAME = "stop_name";
 
     String mRouteName;
     String mDepartureTime;
     String mTripHeadSign;
     String mMinutes;
+    String mStopName;
 
     /**
      * Constructs a route with the name, departure time, headsign, and minutes until arrival.
@@ -33,11 +35,12 @@ public class Route implements Serializable {
      * @param tripHeadSign head sign of the route.
      * @param minutes minutes until the route arrives.
      */
-    public Route(String routeName, String departureTime, String tripHeadSign, String minutes) {
+    public Route(String routeName, String departureTime, String tripHeadSign, String minutes, String stopName) {
         mRouteName = routeName;
         mDepartureTime = departureTime;
         mTripHeadSign = tripHeadSign;
         mMinutes = minutes;
+        mStopName = stopName;
     }
 
     /**
@@ -67,6 +70,8 @@ public class Route implements Serializable {
         return mMinutes;
     }
 
+    public String getStopName() { return mStopName; }
+
     /**
      * Getter for the head sign of the route.
      *
@@ -89,7 +94,7 @@ public class Route implements Serializable {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
                     Route route = new Route(obj.getString(Route.ROUTE_NAME), obj.getString(Route.DEPARTURE_TIME)
-                            ,obj.getString(Route.TRIP_HEADSIGN), obj.getString(Route.MINUTES));
+                            ,obj.getString(Route.TRIP_HEADSIGN), obj.getString(Route.MINUTES), obj.getString(Route.STOP_NAME));
                     routesList.add(route);
                 }
             } catch (JSONException e) {
