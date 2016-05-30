@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import ldimov.tacoma.uw.edu.rideontime.ItemFragment.OnListFragmentInteractionListener;
 //import ldimov.tacoma.uw.edu.rideontime.dummy.DummyContent.DummyItem;
 
+import tcss450.uw.edu.team12.data.FavoriteStopsDB;
 import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
@@ -29,6 +31,7 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     private final StopRoutesDetailListFragment.OnListFragmentInteractionListener mListener;
     // Selected stop
     private Stop mSelectedStop;
+    private FavoriteStopsDB mFavStopsDB;
 
     private static final int TYPE_HEAD = 0;
     private static final int TYPE_ROUTE_LIST = 1;
@@ -111,12 +114,56 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     /**
      * Sets the viewholder with stop information (i.e. stop name).
      */
-    public class HeaderViewHolder extends RecyclerView.ViewHolder{
+    public class HeaderViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
+                                          RecyclerView.OnLongClickListener {
         TextView txtTitle;
+        private ImageView mOverflowIcon;
+
         public HeaderViewHolder(View itemView) {
             super(itemView);
             this.txtTitle = (TextView)itemView.findViewById(R.id.stop_name_header);
             this.txtTitle.setText(mSelectedStop.getStopName().replace("\"", ""));
+
+            mOverflowIcon = (ImageView) itemView.findViewById(R.id.route_head_context_menu);
+            mOverflowIcon.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v == mOverflowIcon) {
+                PopupMenu popup = new PopupMenu(v.getContext(), v);
+                final Context ct = v.getContext();
+                popup.inflate(R.menu.mfp_overflow_menu_file);
+
+
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        mFavStopsDB = new FavoriteStopsDB(ct);
+
+                        boolean success = mFavStopsDB.insertStop(mSelectedStop.getStopId(),
+                                                    mSelectedStop.getStopName().replace("\"", ""));
+
+                        if (success) {
+                            Toast.makeText(mOverflowIcon.getContext(), "Stop id " + mSelectedStop.getStopId() +
+                                    " added to favorite stops.", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(mOverflowIcon.getContext(), "Stop" +
+                                    " already exists in your list of favorite stops.", Toast.LENGTH_LONG).show();
+                        }
+
+                        return success;
+                    }
+
+                });
+                popup.show();
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
     }
     /**
@@ -132,14 +179,9 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
         public Route mItem;
         private ImageView mOverflowIcon;
 
-//        int view_type;
-        // header
-
-
-
         /**
          * Sets the TextView elements with the stop id, departure time, and destination.
-         * @param view
+         * @param view the view
          */
         public RoutesViewHolder(View view) {
             super(view);
