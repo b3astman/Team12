@@ -24,7 +24,7 @@
     <string name="create_password">Enter a password (6+ characters)</string>
     <string name="confirm_password">Confirm your password</string>
     <string name="register">Register</string>
-    <string name="hint_search">Enter stop ID...</string>
+    <string name="hint_search">Enter stop ID&#8230;</string>
     <string name="mfp_fav">Add to favorites</string>
     <string name="mfp_fav2">Remove from favorites</string> <!-- CHANGE THIS LATER -->
     <string name="transit_alerts">Transit Alerts</string>
@@ -32,5 +32,6 @@
     <string name="connection_error">Connection Error</string>
     <string name="xml_error">XML Error</string>
     <string name="share_bus_arrival">Share Content</string>
+    <string name="route_head_desc">An ImageView that holds bus stop name</string>
 
 </resources>

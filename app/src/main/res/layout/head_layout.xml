@@ -3,15 +3,26 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="26dp"
+    android:gravity="center_horizontal"
     android:background="@color/colorPrimary">
+
+
+
     <TextView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
         android:textColor="#ffffff"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:gravity="center"
         android:id="@+id/stop_name_header"
         />
-
+    <ImageView
+        android:id="@+id/route_head_context_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/route_head_desc"
+        android:layout_gravity="center"
+        android:scaleType="center"
+        android:src="@drawable/ic_dots_vertical_white_18dp"
+        />
 </LinearLayout>
