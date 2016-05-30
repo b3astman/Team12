@@ -18,7 +18,7 @@ public class RouteTest extends TestCase {
 
     @Before
     public void setUp() {
-        mRoute = new Route("55555", "12:12:20", "Tacoma to South Seattle", "12");
+        mRoute = new Route("55555", "12:12:20", "Tacoma to South Seattle", "12", "415th ST");
     }
 
     @Test
