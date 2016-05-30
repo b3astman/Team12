@@ -36,36 +36,34 @@ public class FavoriteStopsTest extends ActivityInstrumentationTestCase2<MainActi
         solo.finishOpenedActivities();
     }
 
-//    /**
-//     * Test that load fragment is loaded when clicked.
-//     */
-//    public void testFavoritesLoads() {
-//        solo.clickOnMenuItem("Favorite Stops");
-//        solo.waitForFragmentById(R.id.list_fav);
-//        assertTrue("Favorites List fragment loaded",
-//                getActivity().getTitle().equals("Favorite Stops"));
-//    }
-//
-//    /**
-//     * Test favorite stop loads when there are routes.
-//     */
-//    public void testFavoriteLoadStopWithRoute() {
-//        solo.clickOnMenuItem("Favorite Stops");
-//        solo.clickInRecyclerView(0);
-//        solo.waitForFragmentById(R.id.list_route);
-//        assertTrue(getActivity().getTitle().equals("View Bus Arrivals"));
-//    }
+    /**
+     * Test that load fragment is loaded when clicked.
+     */
+    public void testFavoritesLoads() {
+        solo.clickOnMenuItem("Favorite Stops");
+        solo.waitForFragmentById(R.id.fav_fragment);
+        assertTrue("Favorites List fragment loaded",
+                getActivity().getTitle().equals("Favorite Stops"));
+    }
+
+    /**
+     * Test that a favorite is shown in list
+     */
+    public void testFavoriteLoadStopWithRoute() {
+        solo.clickOnMenuItem("Favorite Stops");
+        assertTrue("Stop 10050 should be in favorites", solo.searchText("10050"));
+    }
 
     /**
      * Test that favorites are added into list.
      */
     public void testAddFavorites() {
-        solo.clickOnMenuItem("View All Stops");
         View image1 = (View) solo.getView(R.id.mfp_context_menu);
         solo.clickOnView(image1);
         solo.waitForText("Add to favorites");
         solo.clickOnText("Add to favorites");
-        assertTrue(solo.searchText("Stop already exists") || solo.searchText("added to favorite"));
+        boolean toast = solo.searchText("Stop already exists") || solo.searchText("added to favorite");
+        assertTrue("Toast should pop up notifying favorite was added", toast);
     }
 
     /**
