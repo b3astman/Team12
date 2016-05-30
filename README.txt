@@ -57,7 +57,7 @@ so we decided not to implement this feature. In that case, we have implemented t
 
 USE CASES ADDED
 --------------
-(none added yet)
+- Pull to refresh. While viewing upcoming arrivals for a stop, the user can 'pull' down to refresh the upcoming arrivals. If a bus has arrived, this will refresh the list and the arrival will be removed from the list. This feature allows the user to have to the most up to date information on the arrivals screen without having to go back to reload the page.
 
 
 DATA STORAGE
