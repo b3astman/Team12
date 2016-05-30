@@ -5,12 +5,34 @@
     android:layout_height="match_parent"
     tools:context="tcss450.uw.edu.team12.authenticate.LoginFragment">
 
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/imageView"
+        android:scaleType="centerInside"
+        android:src="@drawable/logo"
+        android:layout_gravity="center_horizontal" />
+    <android.support.v4.widget.Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
     <EditText
         android:id="@+id/user_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email_hint"
         android:inputType="textEmailAddress"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_gravity="center_horizontal" />
+
     <EditText
         android:id="@+id/pwd"
         android:layout_width="match_parent"
