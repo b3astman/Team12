@@ -43,13 +43,17 @@ USE CASES IMPLEMENTED
 8. Remove Favorites
 - To remove favorites, go to "Favorite Stops" by selecting it in the menu. Once viewing the favorites stops, select the button on the left side of the desired stop, and select the "Remove from favorites" text. A toast will appear confirming that the stop was removed.
 
-9. Transit Alerts, the user can view RSS feed alerts for specific routes / stops
+9. Transit Alerts, the user can view RSS feed alerts for specific routes / stops.
 - To view transit alerts, select "Transit alerts" from the menu
 
 
 USE CASES NOT IMPLEMENTED
 -------------------------
-1. View Map, Stops will be displayed on the map based on their corresponding GPS coordinates.
+1. Viewing a Google Map with all stops. We actually did that by loading all of the 7k stops onto the map, however they were significantly clustered and
+this caused the app to lag, and in order to make the loading of all those stops more efficient and less CPU intensive, we would have had to either use
+an external library or make it more efficient ourselves. We attempted to optimize it, but we realized that it would take more time than we have on our disposal,
+so we decided not to implement this feature. In that case, we have implemented the 90% of the use cases.
+
 
 USE CASES ADDED
 --------------
