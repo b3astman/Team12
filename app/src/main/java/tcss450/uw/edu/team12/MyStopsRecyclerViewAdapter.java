@@ -65,7 +65,7 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
     }
 
     /**
-     * Sets the ViewHolder element with Stop information such as ID and
+     * Sets the RoutesViewHolder element with Stop information such as ID and
      * destination information.
      */
     public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,

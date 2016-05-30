@@ -10,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 //import ldimov.tacoma.uw.edu.rideontime.ItemFragment.OnListFragmentInteractionListener;
 //import ldimov.tacoma.uw.edu.rideontime.dummy.DummyContent.DummyItem;
 
-import tcss450.uw.edu.team12.data.FavoriteStopsDB;
 import tcss450.uw.edu.team12.model.Route;
 import tcss450.uw.edu.team12.model.Stop;
 
@@ -25,14 +23,16 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link Route} and makes a call to the
  * specified {@link StopRoutesDetailListFragment.OnListFragmentInteractionListener}.
  */
-public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStopRoutesRecyclerViewAdapter.ViewHolder> {
+public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Route> mValues;
     private final StopRoutesDetailListFragment.OnListFragmentInteractionListener mListener;
     // Selected stop
     private Stop mSelectedStop;
+
     private static final int TYPE_HEAD = 0;
     private static final int TYPE_ROUTE_LIST = 1;
+
 
     /**
      * Initializes a MyStopRoutesRecyclerViewAdapter.
@@ -46,7 +46,8 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
                                            Stop selectedStop) {
         mValues = routes;
         mListener = listener;
-        mSelectedStop = selectedStop;
+        mSelectedStop = new Stop(selectedStop.getStopId(),
+                                 routes.get(0).getStopName());
     }
 
     @Override
@@ -60,61 +61,69 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
 
         if (viewType == TYPE_ROUTE_LIST) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.fragment_route, parent, false);
-            return new ViewHolder(view, viewType);
+            return new MyStopRoutesRecyclerViewAdapter.RoutesViewHolder(view);
         } else if (viewType == TYPE_HEAD) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.head_layout, parent, false);
-            return new ViewHolder(view, viewType);
+            return new HeaderViewHolder(view);
         }
-        return null;
+        throw new RuntimeException("there is no type that matches the type " + viewType);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
+        if (holder instanceof MyStopRoutesRecyclerViewAdapter.RoutesViewHolder) {
+            final MyStopRoutesRecyclerViewAdapter.RoutesViewHolder routesViewHolder = (MyStopRoutesRecyclerViewAdapter.RoutesViewHolder) holder;
+            routesViewHolder.mItem = mValues.get(position - 1);
+            routesViewHolder.mIdView.setText(mValues.get(position - 1).getRouteName());
 
-        if (holder.view_type == TYPE_ROUTE_LIST) {
-            holder.mItem = mValues.get(position);
-            holder.mIdView.setText(mValues.get(position).getRouteName());
+            routesViewHolder.mContentView.setText(mValues.get(position - 1).getDepartureTime());
+            routesViewHolder.mContentView2.setText(mValues.get(position - 1).getTripHeadSign());
 
-            holder.mContentView.setText(mValues.get(position).getDepartureTime());
-            holder.mContentView2.setText(mValues.get(position).getTripHeadSign());
-
-
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
+            routesViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (null != mListener) {
                         // Notify the active callbacks interface (the activity, if the
                         // fragment is attached to one) that an item has been selected.
-                        mListener.onListFragmentInteraction(holder.mItem);
+                        mListener.onListFragmentInteraction(routesViewHolder.mItem);
                     }
                 }
             });
         }
-// else if (holder.view_type == TYPE_HEAD) {
-//            holder.mStopName.setText("Bus stop name");
-//        }
 
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+
+        return mValues.size() + 1;
     }
 
+
+    /**
+     * Sets the viewholder with stop information (i.e. stop name).
+     */
+    public class HeaderViewHolder extends RecyclerView.ViewHolder{
+        TextView txtTitle;
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            this.txtTitle = (TextView)itemView.findViewById(R.id.stop_name_header);
+            this.txtTitle.setText(mSelectedStop.getStopName().replace("\"", ""));
+        }
+    }
     /**
      * Sets the viewholder with Route information, such as ID, departure time, and the
      * route destination.
      */
-    public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
+    public class RoutesViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
             RecyclerView.OnLongClickListener {
         public View mView;
         public TextView mIdView;
@@ -123,31 +132,24 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
         public Route mItem;
         private ImageView mOverflowIcon;
 
-        int view_type;
-
+//        int view_type;
         // header
-        TextView mStopName;
+
+
 
         /**
          * Sets the TextView elements with the stop id, departure time, and destination.
          * @param view
          */
-        public ViewHolder(View view, int viewType) {
+        public RoutesViewHolder(View view) {
             super(view);
 
-            if (viewType == TYPE_ROUTE_LIST) {
-                mView = view;
-                mIdView = (TextView) view.findViewById(R.id.stop_route_id);
-                mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
-                mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
-                mOverflowIcon = (ImageView) view.findViewById(R.id.route_context_menu);
-                mOverflowIcon.setOnClickListener(this);
-                view_type = 1;
-            } else if (viewType == TYPE_HEAD) {
-                mStopName = (TextView) view.findViewById(R.id.stop_name);
-                mStopName.setText(mSelectedStop.getStopName());
-                view_type = 0;
-            }
+            mView = view;
+            mIdView = (TextView) view.findViewById(R.id.stop_route_id);
+            mContentView = (TextView) view.findViewById(R.id.content_stop_route_depart_time);
+            mContentView2 = (TextView) view.findViewById(R.id.content2_stop_route_dest);
+            mOverflowIcon = (ImageView) view.findViewById(R.id.route_context_menu);
+            mOverflowIcon.setOnClickListener(this);
 
 
         }
@@ -168,7 +170,7 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<MyStop
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_TEXT, "I'm catching the " +
-                                mIdView.getText() + " from " + mSelectedStop.getStopName() +
+                                mIdView.getText() + " from " + mSelectedStop.getStopName().replace("\"", "") +
                                 ". It departs at " + mContentView.getText() +
                                 " and goes to " + mContentView2.getText() + ".");
                         sendIntent.setType("text/plain");
