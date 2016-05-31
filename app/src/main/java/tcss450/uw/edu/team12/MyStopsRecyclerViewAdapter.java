@@ -19,6 +19,8 @@ import tcss450.uw.edu.team12.model.Stop;
 import java.util.List;
 
 /**
+ * A RecyclerView adapter for Stops.
+ *
  * {@link RecyclerView.Adapter} that can display a {@link Stop} and makes a call to the
  * specified {@link OnListFragmentInteractionListener}.
  */
@@ -59,6 +61,10 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
         });
     }
 
+    /**
+     * Return the number of items in the RecyclerView adapter.
+     * @return
+     */
     @Override
     public int getItemCount() {
         return mValues.size();
@@ -92,6 +98,13 @@ public class MyStopsRecyclerViewAdapter extends RecyclerView.Adapter<MyStopsRecy
             mOverflowIcon.setOnClickListener(this);
 
         }
+
+        /**
+         * Attempt to add the item to the favorite stops when the user clicks the
+         * item.
+         *
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             if (v == mOverflowIcon) {

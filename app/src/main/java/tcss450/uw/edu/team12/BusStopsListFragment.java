@@ -84,13 +84,10 @@ public class BusStopsListFragment extends Fragment {
         return view;
     }
 
-//    @Override
-//    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-////        mRecyclerView = view.findViewById(R.id.);
-//        registerForContextMenu(mRecyclerView);
-//    }
-
+    /**
+     * Attach a listener to the fragment
+     * @param context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -126,7 +126,6 @@ public class SearchableActivity extends AppCompatActivity implements StopRoutesD
             case R.id.alerts_updates:
                 Intent in = new Intent(this, TransitAlertsActivity.class);
                 startActivity(in);
-//                finish();
                 break;
         }
         return super.onOptionsItemSelected(item);

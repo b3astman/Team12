@@ -22,6 +22,8 @@ import tcss450.uw.edu.team12.model.Stop;
 import java.util.List;
 
 /**
+ * The RecyclerView adapter for a list of Route.
+ *
  * {@link RecyclerView.Adapter} that can display a {@link Route} and makes a call to the
  * specified {@link StopRoutesDetailListFragment.OnListFragmentInteractionListener}.
  */
@@ -29,7 +31,6 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     private final List<Route> mValues;
     private final StopRoutesDetailListFragment.OnListFragmentInteractionListener mListener;
-    // Selected stop
     private Stop mSelectedStop;
     private FavoriteStopsDB mFavStopsDB;
 
@@ -59,9 +60,7 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
             return TYPE_HEAD;
         }
         return TYPE_ROUTE_LIST;
-
     }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -83,7 +82,8 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof MyStopRoutesRecyclerViewAdapter.RoutesViewHolder) {
-            final MyStopRoutesRecyclerViewAdapter.RoutesViewHolder routesViewHolder = (MyStopRoutesRecyclerViewAdapter.RoutesViewHolder) holder;
+            final MyStopRoutesRecyclerViewAdapter.RoutesViewHolder routesViewHolder =
+                    (MyStopRoutesRecyclerViewAdapter.RoutesViewHolder) holder;
             routesViewHolder.mItem = mValues.get(position - 1);
             routesViewHolder.mIdView.setText(mValues.get(position - 1).getRouteName());
 
@@ -104,9 +104,12 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
 
     }
 
+    /**
+     * Return the numer of items in the recyclerview adapter.
+     * @return
+     */
     @Override
     public int getItemCount() {
-
         return mValues.size() + 1;
     }
 
@@ -128,6 +131,11 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
             mOverflowIcon.setOnClickListener(this);
         }
 
+        /**
+         * Attempt to add the route to the users favorite stops.
+         *
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             if (v == mOverflowIcon) {
@@ -203,8 +211,6 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                 final Context ct = v.getContext();
                 popup.inflate(R.menu.mfp_overflow_menu_file3);
 
-
-
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -216,7 +222,6 @@ public class MyStopRoutesRecyclerViewAdapter extends RecyclerView.Adapter<Recycl
                                 ". It departs at " + mContentView.getText() +
                                 " and goes to " + mContentView2.getText() + ".");
                         sendIntent.setType("text/plain");
-//                        startActivity(sendIntent);
                         ct.startActivity(sendIntent);
                         return true;
                     }

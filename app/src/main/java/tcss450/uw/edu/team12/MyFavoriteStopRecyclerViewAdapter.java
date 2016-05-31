@@ -19,9 +19,10 @@ import tcss450.uw.edu.team12.model.Stop;
 import java.util.List;
 
 /**
+ * The RecyclerView adapter for favorite stops.
+ *
  * {@link RecyclerView.Adapter} that can display a {@link Stop} and makes a call to the
  * specified {@link FavoriteStopFragment.OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class MyFavoriteStopRecyclerViewAdapter extends RecyclerView.Adapter<MyFavoriteStopRecyclerViewAdapter.ViewHolder> {
 
@@ -74,6 +75,7 @@ public class MyFavoriteStopRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
     public class ViewHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener,
             RecyclerView.OnLongClickListener {
+
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
@@ -95,6 +97,12 @@ public class MyFavoriteStopRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
         }
 
+        /**
+         * Clicking the element will attempt to remove the stop from
+         * the favorite stops SQLite database.
+         *
+         * @param v
+         */
         @Override
         public void onClick(View v) {
             if (v == mOverflowIcon) {
@@ -131,12 +139,11 @@ public class MyFavoriteStopRecyclerViewAdapter extends RecyclerView.Adapter<MyFa
 
         }
 
-
-
         @Override
         public boolean onLongClick(View v) {
             return false;
         }
+
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Parses XML in order to read a web feed.
+ *
  * Created by Lachezar Dimov on 5/17/2016.
  * Base code used from https://developer.android.com/training/basics/network-ops/xml.html#parse
  */
@@ -30,6 +32,9 @@ public class TransitAlertsXmlParser {
         }
     }
 
+    /**
+     * Reads an feed by parsing XML.
+     */
     private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
         List entries = new ArrayList();
 
@@ -51,6 +56,10 @@ public class TransitAlertsXmlParser {
         return entries;
     }
 
+    /**
+     * Creats an item containing the title of the article, publication date and
+     * web link.
+     */
     public static class Item {
         public final String title;
         public final String pubDate;
@@ -63,8 +72,10 @@ public class TransitAlertsXmlParser {
         }
     }
 
-    // Parses the contents of an item. If it encounters a title, publication date, or link tag,
-    // hands them off to their respective "read" methods for processing. Otherwise, skips the tag.
+    /**
+     * Parses the contents of an item. If it encounters a title, publication date, or link tag,
+     * hands them off to their respective "read" methods for processing. Otherwise, skips the tag.
+     */
     private Item readItem(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "item");
         String title = null;
@@ -93,7 +104,7 @@ public class TransitAlertsXmlParser {
         return new Item(title, pubDate, link);
     }
 
-    // Processes title tags in the feed.
+    /** Processes title tags in the feed. */
     private String readTitle(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "title");
         String title = readText(parser);
@@ -101,23 +112,20 @@ public class TransitAlertsXmlParser {
         return title;
     }
 
-    // Processes pubDate tags in the feed.
+    /** Processes pubDate tags in the feed. */
     private String readPubDate(XmlPullParser parser) throws IOException, XmlPullParserException {
         String date = "";
         parser.require(XmlPullParser.START_TAG, ns, "pubDate");
         String tag = parser.getName();
-
         date = readText(parser);
 
         // Format date, since it is in the format of Sun, 08 May 2016 17:18:25 -0500
         date = date.substring(0, date.length() - 6);
-        //parser.nextTag();
-
         parser.require(XmlPullParser.END_TAG, ns, "pubDate");
         return date;
     }
 
-    // Processes link tags in the feed.
+    /** Processes link tags in the feed. */
     private String readLink(XmlPullParser parser) throws IOException, XmlPullParserException {
         String link = "";
         parser.require(XmlPullParser.START_TAG, ns, "link");
@@ -131,7 +139,7 @@ public class TransitAlertsXmlParser {
 
 
 
-    // Extracts text values from title and pubDate tags.
+    /** Extracts text values from title and pubDate tags. */
     private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
         String result = "";
         if (parser.next() == XmlPullParser.TEXT) {

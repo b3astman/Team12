@@ -19,15 +19,14 @@ import java.util.List;
 
 import java.net.URL;
 
+/**
+ * An activity that displays an RSS feed displaying alerts/revisions to bus schedules.
+ */
 public class TransitAlertsActivity extends AppCompatActivity {
 
-
-//    public static final String WIFI = "Wi-Fi";
     public static final String ANY = "Any";
     private static final String URL = "https://public.govdelivery.com/topics/WAKCDOT_255/feed.rss";
-
     public static String sPref = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +37,17 @@ public class TransitAlertsActivity extends AppCompatActivity {
         loadPage();
     }
 
-    // Uses AsyncTask to download the XML feed from King County Metro (feed hosted on another domain).
+    /**
+     * Uses AsyncTask to download the XML feed from King County Metro (feed hosted on another domain).
+     */
     public void loadPage() {
 
         new DownloadXmlTask().execute(URL);
     }
 
-    // Implementation of AsyncTask used to download XML feed from King County Metro
+    /**
+     * Implementation of AsyncTask used to download XML feed from King County Metro
+     */
     private class DownloadXmlTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -59,7 +62,6 @@ public class TransitAlertsActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-//            setContentView(this);
             // Displays the HTML string in the UI via a WebView
             WebView myWebView = (WebView) findViewById(R.id.webView);
             myWebView.loadData(result, "text/html", null);
@@ -68,8 +70,9 @@ public class TransitAlertsActivity extends AppCompatActivity {
         }
     }
 
-    // Uploads XML, parses it, and combines it with
-// HTML markup. Returns HTML string.
+    /**
+     * Uploads XML, parses it, and combines it with HTML markup. Returns HTML string.
+     */
     private String loadXmlFromNetwork(String urlString) throws XmlPullParserException, IOException {
         InputStream stream = null;
         // Instantiate the parser
@@ -77,17 +80,12 @@ public class TransitAlertsActivity extends AppCompatActivity {
         List<TransitAlertsXmlParser.Item> items = null;
         String title = null;
         String url = null;
-//        String summary = null;
-//        Calendar rightNow = Calendar.getInstance();
-//        DateFormat formatter = new SimpleDateFormat("MMM dd h:mmaa");
 
         // Checks whether the user set the preference to include summary text
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean pref = sharedPrefs.getBoolean("summaryPref", false);
 
         StringBuilder htmlString = new StringBuilder();
-        // Append current time
-        // htmlString.append("<em>" + formatter.format(rightNow.getTime()) + "</em>");
 
         try {
             stream = downloadUrl(urlString);
@@ -114,8 +112,10 @@ public class TransitAlertsActivity extends AppCompatActivity {
         return htmlString.toString();
     }
 
-    // Given a string representation of a URL, sets up a connection and gets
-    // an input stream.
+    /**
+     * Given a string representation of a URL, sets up a connection and gets
+     * an input stream.
+     */
     private InputStream downloadUrl(String urlString) throws IOException {
         URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();

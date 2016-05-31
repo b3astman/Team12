@@ -31,11 +31,8 @@ import java.util.List;
  */
 public class FavoriteStopFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
-    //    private OnListFragmentInteractionListener mListener;
     private RecyclerView mRecyclerView;
     private List<Stop> mFavoriteStopList;
     private FavoriteStopsDB mFavoriteStopsDB;
@@ -48,8 +45,6 @@ public class FavoriteStopFragment extends Fragment {
     public FavoriteStopFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static FavoriteStopFragment newInstance(int columnCount) {
         FavoriteStopFragment fragment = new FavoriteStopFragment();
         Bundle args = new Bundle();
@@ -81,7 +76,6 @@ public class FavoriteStopFragment extends Fragment {
             } else {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-//            recyclerView.setAdapter(new MyFavoriteStopRecyclerViewAdapter(DummyContent.ITEMS, mListener));
             DownloadFavoriteStops task = new DownloadFavoriteStops();
             task.execute(new String[]{""});
         }
@@ -130,17 +124,29 @@ public class FavoriteStopFragment extends Fragment {
         void onListFragmentInteraction(Stop stop);
     }
 
+    /**
+     * Class that handles creating / downloading the favorite stops.
+     */
     private class DownloadFavoriteStops extends AsyncTask<String, Void, String> {
 
+        /**
+         * Get the favorite stops the user has saved.
+         *
+         * @param urls
+         * @return
+         */
         @Override
         protected String doInBackground(String... urls) {
             mFavoriteStopsDB = new FavoriteStopsDB(getContext());
             mFavoriteStopList = mFavoriteStopsDB.getFavStops();
-
             mFavoriteStopsDB.closeDB();
             return "";
         }
 
+        /**
+         * Handle the display of the favorite stops. If there are no stops, display a toast.
+         * @param result
+         */
         @Override
         protected void onPostExecute(String result) {
             if (!mFavoriteStopList.isEmpty()) {

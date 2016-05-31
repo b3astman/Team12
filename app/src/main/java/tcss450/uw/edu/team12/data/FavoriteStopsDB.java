@@ -65,9 +65,6 @@ public class FavoriteStopsDB {
     public boolean removeStop(String stopId) { // , String stopName
 
         long rowId = -1;
-//        ContentValues contentValues = new ContentValues();
-//        contentValues.put("stop_id", stopId);
-//        contentValues.put("stop_name", stopName);
 
         try {
             rowId = mSQLiteDatabase.delete(FAV_STOPS_TABLE, "stop_id" + "=" + stopId, null);

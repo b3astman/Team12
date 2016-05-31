@@ -11,7 +11,8 @@ import tcss450.uw.edu.team12.R;
 
 
 /**
- * Test that favorites are being displayed properly.
+ * Test that favorites are being displayed properly. Uses robotium testing to test
+ * that Favorite Stops are loaded correctly.
  *
  * Created by bethany on 5/19/16.
  */
@@ -67,7 +68,7 @@ public class FavoriteStopsTest extends ActivityInstrumentationTestCase2<MainActi
     }
 
     /**
-     * Test that favorites are remove.
+     * Test that favorites are removed.
      */
     public void testFavoriteRemove() {
         solo.clickOnMenuItem("Favorite Stops");

@@ -10,7 +10,9 @@ import java.util.ArrayList;
 import tcss450.uw.edu.team12.model.Route;
 
 /**
- * Created by bethany on 5/21/16.
+ * Tests for the Route class.
+ *
+ * Created by Bethany Eastman on 5/21/16.
  */
 public class RouteTest extends TestCase {
 
@@ -21,11 +23,17 @@ public class RouteTest extends TestCase {
         mRoute = new Route("55555", "12:12:20", "Tacoma to South Seattle", "12", "415th ST");
     }
 
+    /**
+     * Test that a route name is returned correctly.
+     */
     @Test
     public void testRouteName() {
         assertEquals("55555", mRoute.getRouteName());
     }
 
+    /**
+     * Test that a Route name can not be set to null.
+     */
     @Test
     public void testSetNullRouteName() {
         try {
@@ -37,11 +45,17 @@ public class RouteTest extends TestCase {
         }
     }
 
+    /**
+     * Test trip head sign for a Route is returned correctly.
+     */
     @Test
     public void testRouteHeadSign() {
         assertEquals("Tacoma to South Seattle", mRoute.getTripHeadSign());
     }
 
+    /**
+     * Test that a trip head sign for a Route can't be set to null.
+     */
     @Test
     public void testSetNullHeadSign() {
         try {
@@ -53,11 +67,17 @@ public class RouteTest extends TestCase {
     }
 
 
+    /**
+     * Test a departure time is returned correctly.
+     */
     @Test
     public void testRouteDepartureTime() {
         assertEquals("12:12:20", mRoute.getDepartureTime());
     }
 
+    /**
+     * Test that a departure time can not be set to null.
+     */
     @Test
     public void testSetNullRouteDepartureTime() {
         try {
@@ -69,11 +89,17 @@ public class RouteTest extends TestCase {
         }
     }
 
+    /**
+     * Test that the minutes to arrival for Route is returned correctly.
+     */
     @Test
     public void testMinutes() {
         assertEquals("12", mRoute.getMinutes());
     }
 
+    /**
+     * Test that minutes to arrival can not be set to null.
+     */
     @Test
     public void testSetNullMinutes() {
         try {
@@ -84,11 +110,17 @@ public class RouteTest extends TestCase {
         }
     }
 
+    /**
+     * Test that the constructor creates an object.
+     */
     @Test
     public void testConstructor() {
         assertNotNull(mRoute);
     }
 
+    /**
+     * Test correct JSON objects are parsed.
+     */
     @Test
     public void testParseCourseJSON() {
         String courseJSON =
